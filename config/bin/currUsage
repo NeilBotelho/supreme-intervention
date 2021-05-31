@@ -1,0 +1,31 @@
+#!/bin/sh
+printSeparator(){
+echo "***********************************************************"
+}
+getUsage(){
+	smartOp=$(sudo smartctl -a $1)
+	gbRead=$( echo "$smartOp"|grep "Data Units Read"|rev|cut -d" " -f1-3|rev)
+	gbWritten=$(echo "$smartOp" |grep "Data Units Written"|rev|cut -d" " -f1-3|rev)
+	echo "Written: $gbWritten"
+	echo "Read: $gbRead"
+	echo ""
+}
+currUsage(){
+	if [ -z "$1" ];then
+		now=$(date +"%k:%M %e %b %Y: ")
+		echo "$now" >>$DISK1MONITOR
+		getUsage /dev/nvme0n1 >> $DISK1MONITOR
+
+		echo "$now" >>$DISK2MONITOR
+		getUsage /dev/nvme1n1 >> $DISK2MONITOR
+	fi
+	printSeparator
+	echo "Disk 1:"
+	cat $DISK1MONITOR|tail -12|head -11
+	printSeparator
+	printSeparator
+	echo "Disk 2:"
+	cat $DISK2MONITOR|tail -12| head -11
+	printSeparator
+}
+currUsage $1

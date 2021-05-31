@@ -1,0 +1,11 @@
+#!/bin/sh
+currBright=$(cat  /sys/class/backlight/amdgpu_bl0/brightness|tr -d "\n")
+
+currBright=$(echo "scale=0;100*$currBright/255"|bc -l)
+echo " $currBright%  "
+
+case $BLOCK_BUTTON in
+	3)$TERMINAL -e "$EDITOR" "$0"; pkill -RTMIN+10 dwmblocks
+	;;
+esac
+

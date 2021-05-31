@@ -1,0 +1,96 @@
+#!/bin/sh
+home="/home/"$USER
+
+#Default Arguements
+dryRun=""
+verbose=""
+hideOuput="yes"
+
+#where to store
+dotfilesReciever=$home"/Desktop/backups/dotfiles"
+
+printSeparator(){
+	echo "#############################################"
+}
+syncHome(){
+	# ~ dotfiles
+	echo "Syncing home directory"
+	homeDotFiles=".bashrc .profile"
+	for file in $homeDotFiles;
+	do 
+	    rsync -uiz$verbose$dryRun $home"/"$file $dotfilesReciever"/home"
+	done
+	printSeparator
+}
+
+syncConfigs(){
+	# .config folders
+	echo "Syncing config directory"
+	configDotFolders="bash/ git/ sxhkd/ nvim/ readline/ zathura/ mpv/ bin/ X11/ alacritty/ dunst/ psd/ python/ tmux/"
+	remove="$XDG_CONFIG_HOME/mpv/watch_later/"
+	
+	for folder in $configDotFolders;
+	do
+	    rsync -uaizP$verbose$dryRun --exclude="history wallpapers .Xauthority" $home"/.config/"$folder $dotfilesReciever"/config/$folder"
+	done
+	for folder in $remove;
+	do
+		rm -rf $folder
+	done
+	pyHistExists=$(ls $XDG_CONFIG_HOME/python/ | grep python_history )
+	[ -n  "$pyHistExists" ] && rm $XDG_CONFIG_HOME/python/python_history*  
+
+	echo "#############################################"
+}
+
+syncShare(){
+	# .local.share folders
+	echo "Syncing .local/share"
+	shareFolders="ssd_monitor/ myMusic/playlists/"
+	for folder in $shareFolders;
+	do
+		rsync -uaizP$verbose$dryRun $home"/.local/share"/$folder $dotfilesReciever"/local/share/"$folder
+	done
+}
+
+other(){
+	rsync -uarizP$verbose$dryRun /etc/acpi/ $dotfilesReciever/etc/acpi 
+	rsync -uarizP$verbose$dryRun /etc/thinkfan.conf $dotfilesReciever/etc/thinkpad.conf 
+	rsync -uaiz$verbose$dryRun /etc/xdg/nvim/sysinit.vim $dotfilesReciever/etc/xdg/nvim/sysinit.vim
+	rsync -uaiz$verbose$dryRun /etc/X11/xorg.conf.d/99-libinput-custom-config.conf $dotfilesReciever/etc/X11/xorg.conf.d/
+}
+main(){
+    syncHome
+    syncConfigs
+	syncShare
+	other
+}
+
+
+while getopts :vVnh opt; do
+	case $opt in
+        v)hideOuput="no"
+            echo "v"
+        ;;
+        V) verbose="v"
+            hideOuput="no"
+            echo "V"
+		;;
+		n)dryRun="n"
+		;;
+		h)echo "Usage: Backup dotfiles
+-v : Show Output
+-V : Very Verbose Output
+-n : Dry run. No files are changed"
+		;;
+	esac
+done
+if  [ "$hideOuput" = "no" ]; then
+    main 
+else
+    main > /dev/null
+fi
+
+if [ -n "$dryRun" ];then 
+    echo "Dry run. No files were changed"
+fi

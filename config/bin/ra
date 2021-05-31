@@ -1,0 +1,13 @@
+#!/bin/sh
+# ra= Remote Add
+# Used to add magnets from clipboard to seed box
+magnet=$(xclip -o primary)
+reply=$(transmission-remote 192.168.0.119:9091/transmission/rpc -a $magnet)
+success=$(echo "$reply" |grep success)
+if [ -z "$success" ];then
+	notify-send "magnet add failed"
+else
+	notify-send "$reply"
+fi
+
+echo "$reply"

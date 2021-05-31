@@ -1,0 +1,26 @@
+#!/bin/sh
+customMessage(){
+	echo "Add all with custom message?[y/N]"
+	read confirmation
+	if [ "$confirmation" = "y" ];then
+		read message
+		git add * 
+		git commit -m "$message"
+	fi
+}
+
+status=$(git status -s)
+if [ -z "$status" ];then
+	echo "Nothing to update"
+else
+	git status -s
+	echo "Commit all with message $( date '+%H:%M %e %b %Y')?[y/N]"
+	read confirmation
+	if [ "$confirmation" = "y" ];then
+		git add *
+		git commit -m "$( date '+%H:%M %e %b %Y')"
+		
+	else
+		customMessage
+	fi
+fi

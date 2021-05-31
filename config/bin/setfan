@@ -1,0 +1,12 @@
+#!/bin/sh
+fanLevel(){
+	echo "level $1" |sudo tee /proc/acpi/ibm/fan
+}
+
+case "$1" in
+    [1-6])fanLevel $1
+      ;;
+    *)fanLevel "auto"
+      ;;
+esac
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+# Get the volume of ALSA's master volume output.  Show an icon if or
+# not muted.
+# amixer get Master | grep -o "[0-9]*%\|\[on\]\|\[off\]" | head -2|sed "s/\[on\]//;s/\[off\]//"
+volstat="$(amixer get Master)" # ALSA only equivalent.
+vol=$(echo "$volstat" | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q") # ALSA
+icon=$(echo "$volstat"| grep -o "[0-9]*%\|\[on\]\|\[off\]" | head -2|tail -1|sed "s/\[on\]//;s/\[off\]//")
+echo " $vol% $icon  "
+
+ case $BLOCK_BUTTON in
+	 3)$TERMINAL -e "$EDITOR" "$0"; pkill -RTMIN+10 dwmblocks
+	 ;;
+ esac
+

@@ -1,0 +1,38 @@
+#Dmenu app selector map
+alt + p
+        dmenu_run
+
+#Backup terminal map
+control + alt + t
+        xfce4-terminal
+alt +space
+    st
+
+#Wallpaper map
+alt + shift + {w,c,d,p,f}
+        setWall -{a,s,d,p,f}
+
+#Volume Control Maps
+XF86Audio{Raise,Lower}Volume
+	amixer sset Master 5%{+,-}; pkill -RTMIN+10 dwmblocks
+
+XF86AudioMute
+	amixer sset Master toggle; pkill -RTMIN+10 dwmblocks
+
+XF86AudioMicMute
+	amixer sset Capture toggle
+Wifi reset map
+alt + r
+    pkill -RTMIN+4 dwmblocks; pkill -RTMIN+3 dwmblocks
+
+#Quick search map
+alt +shift + p 
+    surf
+
+#Subl map
+alt+shift+e
+    subl
+
+#toggle screenkey
+super + s
+	toggleScreenKey

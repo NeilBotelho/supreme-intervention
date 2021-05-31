@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cargo test
+echo "[Press Enter to Continue]"
+read a

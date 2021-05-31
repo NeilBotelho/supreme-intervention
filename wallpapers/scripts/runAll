@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# scriptName=$0
+files=$(ls)
+
+for i in $files; do
+    case $i in
+    	*.jpg|*.png)
+	    	echo "$i"
+	        setWall -S $i
+	        echo "Keep [Y/n]?"
+	        read del
+	        if [ "$del" = "n" ]; then
+	            echo "Press y to confirm delete"
+	            read del
+	            if [ "$del" = "y" ]; then 
+	                echo "Deleting"
+	                rm $i
+	            else
+	                echo "$del Cancelling Delete"
+	            fi
+	        fi
+	    ;;
+	   esac
+done

@@ -1,0 +1,87 @@
+#!/bin/sh
+
+#Navigation aliases
+alias skl="cd ~/Desktop/suckless/"
+alias skewl="cd ~/Desktop/skewl/sem6"
+alias scripts="cd ~/.local/bin"
+alias bins="cd ~/.config/bin/"
+alias pr="cd ~/projects"
+alias arc="cd ~/Desktop/archive"
+alias bk="cd ~/Desktop/backups/"
+alias dt="cd ~/Desktop/backups/dotfiles"
+alias ent="cd ~/Downloads/mediaserver/"
+alias msk="cd ~/.local/share/myMusic/"
+alias todo="vim ~/.local/store/todo/todo"
+alias wrk="cd ~/projects/work"
+alias work="wrk"
+alias wrkfl="cd ~/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
+alias ibmfl="cd ~/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
+
+#Shortforms 
+alias cl="clear"
+alias cd..="cd .."
+alias ..="cd .."
+alias cpr="cp -r"
+alias ex="extract"
+alias rmf="rm -r"
+alias sensor="watch -n 1 sensors"
+alias ports="netstat -tulanp"
+
+#Edit aliases
+alias binds="vim ~/.config/sxhkd/sxhkdrc"
+alias xrc="vim ~/.config/X11/xinitrc"
+alias vima="vim /home/neil/.config/alacritty/alacritty.yml"
+
+#Mispelling aliases
+alias sl="ls"
+alias l="ls"
+alias claer="clear"
+alias sulb="subl"
+
+#Application Aliases
+alias vim="nvim"
+alias p="python3"
+alias ps="python3.7"
+alias clip="xclip -sel clip"
+alias build="sudo make clean install"
+alias jup="jupyter notebook"
+alias xfce="startxfce4"
+alias urxvt='urxvt -bg "#1b1c1b" -fg "#ffffff" -fn "xft:Bitst'
+alias musicDownload="youtube-dl -x"
+#alias vhdl="wine /home/neil/.local/share/wineprefixes/default/drive_c/Modeltech_pe_edu_10.4a/win32pe_edu/modelsim.exe"
+alias ma="sshfs 192.168.0.118:/storage/emulated/0/  ~/Downloads/Android/ -p 2222" 
+alias cat="bat --theme 'Monokai Extended'"
+alias Cat="/usr/bin/cat"
+alias emacs="echo 'Dont do this again please'"
+alias vimt="vim /home/neil/.config/tmux/tmux.conf"
+# Command aliases
+alias fixFn="sudo rtcwake -m mem -s 2"
+
+#Package manager aliases
+alias install="sudo pacman -S"
+alias remove="sudo pacman -Rns"
+alias update="paru -Pw ; paru -Syu"
+alias updateMirrors="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
+
+#Default aliases
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias np='nano -w PKGBUILD'
+alias more='less'
+alias grep="grep --color"
+alias restart="sudo restart"
+alias ll="ls -lha" #List everything in human readable form
+alias ls="ls -hN --color=auto --group-directories-first" #Make ls human readable with color and directories first
+alias lt="ls -hs1S"
+alias size="du -ach | sort -h" #Gives size of eveything includeing folders
+alias mkdir="mkdir -pv" #Make the necessary parent directories
+alias startx="startx $XDG_CONFIG_HOME/X11/xinitrc"
+
+# Show functions and aliases
+alias aliases="grep --color=always -e '^$' -e "alias" '$XDG_CONFIG_HOME'/bash/aliases|less -R"
+alias functions="grep --color=always -A 1 '(){' '$XDG_CONFIG_HOME'/bash/functions|less -R"
+
+#For clearing home
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+

@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage[labelformat=empty]{caption}
+\lstset{
+basicstyle=\small\ttfamily,
+columns=flexible,
+breaklines=true
+}
+
+\newcommand{\outputfig}[1]{
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{imgs/#1.png}
+		\caption*{Output of program  #1}
+	\end{figure}
+}
+
+\title{Expt 7: Input Output Port Programming} 
+\author{Neil Botelho, 181105010}
+\date{03/05/2021}
+
+\begin{document}
+{\bfseries\maketitle}
+\section{}
+\end{document}

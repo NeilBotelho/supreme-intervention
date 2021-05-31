@@ -1,0 +1,92 @@
+#!/bin/sh
+
+#Previous Wallpaper
+currFile=$WALLPAPER/current/curr
+curr=$(cat $currFile)
+#Folders
+dark=$WALLPAPER/dark/*
+safe=$WALLPAPER/safe/*
+unsorted=$WALLPAPER/unsorted/*
+favourites=$WALLPAPER/favourites/*
+printUsage(){
+    echo "USAGE: setWall [OPTIONS]"
+    echo "sets background from \$WALLPAPER"
+    echo "-h print this usage information"
+    echo "-a set any"
+    echo "-s set safe background"
+    echo "-d set dark background"
+    echo "-S filepath : set particular file"
+}
+
+makeStack(){
+	for i in $@;do
+		echo "$(ls -d $i)"
+	done
+}
+
+getNext(){
+	stack="$1"
+
+	next=$(echo "$stack" |grep -A1 "$curr")
+	numEntries=$(echo "$next"|wc -l)
+	
+	if [ $numEntries -lt 2 ];then
+		next=$(echo "$stack"|head -1)
+	else
+		next=$(echo "$next"|tail -1)
+	fi
+	echo "$next"
+}
+
+getPrevious(){
+    stack="$1"
+
+    next=$(echo "$stack" |grep -B1 "$curr")
+    numEntries=$(echo "$next"|wc -l)
+    if [ $numEntries -lt 2 ];then
+        next=$(echo "$stack"|tail -1)
+        notify-send "$next"
+    else
+        next=$(echo "$next"|head -1)
+    fi
+    echo "$next"
+}
+
+setWallpaper(){
+	nitrogen --set-auto $1 &
+	if [ $? = 0 ];then 
+		echo "$1" > $currFile
+	fi
+	echo "$1"
+}
+
+
+if [ -z "$1" ]; then
+    scriptName=$(basename "$0")
+    echo "try: $scriptName -h"
+    echo "for usage information"
+else
+	#Make stack
+    case "$1" in
+        "-a") stack=$(makeStack $unsorted $dark)
+            ;;
+        "-s") stack=$(makeStack $safe)
+            ;;
+        "-d") stack=$(makeStack $dark)
+            ;;
+		"-f")stack=$(makeStack $favourites)
+			;;
+        "-p") stack=$(makeStack $safe $dark $unsorted $favourites)
+              next=$(getPrevious "$stack")
+              setWallpaper $next
+              exit
+            ;;
+        "-h"|*) printUsage
+			    exit
+            ;;
+    esac
+    #Get next image
+    next=$(getNext "$stack")
+    #Set image
+    setWallpaper $next
+fi

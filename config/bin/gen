@@ -1,0 +1,12 @@
+#!/bin/sh
+if [ -z "$1" ];then
+	newPass=$(openssl rand -base64 16)
+	echo "$newPass"|xclip -sel clip
+	len=$(echo "$newPass"|wc -c)
+	echo "$len character random password clipped"
+else
+	newPass=$(openssl rand -base64 "$1")
+	echo "$newPass"|xclip -sel clip
+	echo "$1 character random password clipped"
+
+fi

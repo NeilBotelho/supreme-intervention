@@ -1,0 +1,19 @@
+#!/bin/sh
+RC="/home/neil/.config/alacritty/alacritty.yml"
+defaultValue=0.7
+if [ -z "$1" ];then
+	newvalue=$(echo "$defaultValue")
+else
+	newvalue=$(python - << EOF
+from math import floor
+try:
+	val=floor($1)
+	if floor($1) == 0 or $1 == 1: print($1)
+	else: print($defaultValue)
+except:
+	print($defaultValue)
+EOF
+	)
+fi
+
+sed -i "s/background_opacity: [0-9.]*/background_opacity: $newvalue /g" $RC

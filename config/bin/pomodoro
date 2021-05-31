@@ -1,0 +1,11 @@
+#!/bin/sh
+t=$1
+time=$(echo "$t * 60"|bc)
+elapsed_time=0
+echo "Time: $time"
+while [ "$time" -ne "$elapsed_time" ]; do
+	echo -en "\r Elapsed Time: $elapsed_time"
+	elapsed_time=$(echo "$elapsed_time + 1"|bc)
+	sleep 1
+done
+notify-send "done"

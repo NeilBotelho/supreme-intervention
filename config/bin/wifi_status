@@ -1,0 +1,41 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+    1)$TERMINAL -e nmtui;pkill -RTMIN+4 dwmblocks
+    ;;
+    3)$TERMINAL -e "$EDITOR" "$0";pkill -RTMIN+4 dwmblocks
+    ;;
+esac
+
+
+#Exit if already running
+name="wifi_status"
+nRunning=$(pgrep "$name")
+second=$(echo "$nRunning" | head -2 |wc -l)
+if [ $second -gt 1 ];then
+    exit
+fi
+
+
+
+ssid=$(nmcli connection show |grep wlp3s0|cut -d" " -f1)
+if [ -z "$ssid" ];then
+        ssid=$(nmcli connection show |grep wlp3s0|cut -d" " -f1)
+        if [ -z "$ssid" ];then
+			status=$(nmcli radio wifi)
+			if [ "$status" = "disabled" ];then
+				echo "disabled   "
+			else
+				echo "n/a  "
+			fi
+            exit
+        else
+            pkill -RTMIN+4 dwmblocks
+        fi
+else
+    echo " $ssid  "
+fi
+if [ -d /sys/class/net/enp1s0/operstate ] 
+then 
+    sed " s/down//;s/up// " /sys/class/net/e*/operstate
+fi

@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "Are you sure you want to restore?[Y/n]"
+if [ "$ans" = "Y" ];then
+	cp -r ./etc/* /etc/
+	cp -r ./home/* /home/$USER/
+	cp -r ./config/* /home/$USER/.config/
+	cp -r ./local/share/* /home/$USER/.local/share/
+fi

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+temp1=$(sensors| grep temp1|head -2|tail -1|cut -d+ -f2|cut -d. -f1)
+while true;do
+	if [ $temp1 -gt 85 ];then 
+		beep 
+		notify-send --expire-time=5000 -u "critical" "Temperature is $temp1" 
+	fi
+	echo "$(date +'%H:%M:%S  ')$temp1 °C"
+	sleep 1
+
+done
+

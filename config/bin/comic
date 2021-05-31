@@ -1,0 +1,114 @@
+#!/usr/bin/python3
+import sys
+import os
+from  requests import get
+from bs4 import BeautifulSoup
+import subprocess
+from random import randint
+
+ROOT="/home/neil/.cache/comic"
+XKCD=ROOT+"/xkcd"
+GOOSE=ROOT+"/goose"
+tmpFile="/tmp/comicTmp/comicStrip"
+## COMIC dictionary fields:
+#top level key is comic name
+#path should point to the top level of the directory for that comic
+#url should be the base of the url for the comic 
+#end indicates what comes after the comic number (usually a /)
+COMICS={'xkcd':{'path':XKCD,'baseUrl':"https://xkcd.com/",'end':'/'}}
+        #,'abstrusegoose':{'path':GOOSE,'baseUrl':"https://abstrusegoose.com/",'end':''}}
+
+## To add more comics:
+#Add the appropriate values to the above dictionary
+#Modify the getImageUrl function so that the appropriate img tag can be found
+
+
+def checkExists(url):
+    r=get(url)
+    if r.status_code==200:
+        return r 
+    return False
+
+def getImageUrl(soup):
+    soup=BeautifulSoup(soup,'html.parser')
+    getWord=['imgs.xkcd.com/comics/']#,'abstrusegoose.com/strips/']
+    for n in soup.find_all('img'):
+        for m in getWord:
+            if m in str(n['src']):
+                return str(n['src'])
+    return None
+
+
+def getImage(imageUrl,path=None):
+    if not path:
+        if not os.path.isdir("/tmp/comicTmp/"):
+            os.mkdir("/tmp/comicTmp/")
+        path=tmpFile
+    if(imageUrl[0:2]=='//'):
+        imageUrl='http:'+imageUrl
+    r=get(imageUrl)
+    if r.status_code == 200:
+        with open(path, 'wb') as f:
+            for chunk in r:
+                f.write(chunk)
+        return 1
+    else:
+        print("Something went wrong getting the image")
+        exit()
+        return 0
+
+def getRandom():
+    url="https://c.xkcd.com/random/comic/"
+    exists=checkExists(url)
+    if (exists):
+        imageUrl=getImageUrl(exists.text)
+        getImage(imageUrl)
+        display()
+
+
+
+def getN(num=None):
+    # for comic in COMICS:
+    comic="xkcd"
+    if num:
+        lastViewed=int(num)-1
+    else:
+        lastViewedPath = COMICS[comic]['path']+'/prevComic' #path to file containing last viewed comic number
+        with open(lastViewedPath,'r') as f:
+                lastViewed = int(f.readline().strip())
+    
+    newNum=str(1+int(lastViewed)) 
+    url=COMICS[comic]['baseUrl']+newNum+COMICS[comic]['end']
+    exists=checkExists(url)
+    if(exists!=False):
+        imageUrl=getImageUrl(exists.text)
+    else:
+        print("no new comic available")
+        return
+
+    # imagePath=f"{COMICS[comic]['path']}/archive/{newNum}.png"
+    image=getImage(imageUrl)
+    # If you get to this point and getting the image failed then exit and notify user
+    if not image:
+        exit()
+    display()
+    
+    if not num:
+        with open(lastViewedPath,'w') as f:
+            f.seek(0)
+            f.write(newNum)
+            f.truncate()
+
+def display(imagePath=None):
+    if not imagePath:
+        imagePath=tmpFile
+    displayProcess = subprocess.Popen(["sxiv", imagePath])
+
+# getN()
+if __name__== "__main__":
+    if len(sys.argv)==1:
+        getN()
+    elif sys.argv[1].isnumeric():
+        getN(num=sys.argv[1])
+    else:
+        getRandom()

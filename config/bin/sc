@@ -1,0 +1,27 @@
+#!/bin/sh
+
+dir=$(cat /home/neil/.local/share/sc/dir)
+lastnum=$(ls $dir | grep "^[0-9]\{1,3\}.png"|cut -d. -f1|sort -g|tail -1)
+filename=$dir$(expr $lastnum + 1 )".png"
+
+screenshot(){
+	activeWindow=$(xdotool getactivewindow)
+	err=$(maim -s $filename)
+	if [ -z "$err"];then
+		notify-send "Saved to $filename"
+	else
+		notify-send "$err"
+	fi
+}
+
+deleteLast(){
+	rm $dir"/"$lastnum".png"
+}
+
+if [ -z "$1" ];then
+	screenshot
+else
+	if [ "$1" == "-x" ];then
+		deleteLast
+	fi
+fi

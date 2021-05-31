@@ -1,0 +1,21 @@
+#!/bin/sh
+dir="/home/neil/.local/share/sc/dir"
+
+if [ -z "$1" ];then
+	cat $dir
+	exit
+fi
+
+if [ -d "$1" ];then
+	newDir=$(cd $1 && pwd)
+	lastChar=$(echo "$newDir"|rev|cut -c1)
+	if [ "$lastChar" != "/" ];then
+		newDir=$newDir"/"
+	fi
+	echo "$newDir" > $dir
+else
+	echo "$1 is not a valid directory"
+	exit
+fi
+
+

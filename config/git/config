@@ -1,0 +1,13 @@
+[user]
+	name = Neil Botelho
+	email = neil.botelho321@gmail.com
+[core]
+	editor = nvim
+[pull]
+	rebase = false
+[alias]
+    a  = add
+	ch = checkout
+	b = branch
+	c  = commit
+	s  = status

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+args=""
+for i in $@;do
+	args="$args $i"
+done
+args=$(echo "$args"|cut -c2-)
+
+c "$args"
+echo "[ Press any key to continue ]"
+read a

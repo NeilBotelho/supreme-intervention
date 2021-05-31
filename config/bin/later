@@ -1,0 +1,10 @@
+#!/bin/sh
+todoFile=/home/neil/.local/store/todo/pomodoroTodo
+thingTodo=$(echo ""|dmenu -p todo )
+if [ -z "$thingTodo" ];then
+	exit
+fi
+num=$(cat $todoFile|wc -l)
+num=$(echo "$num +1" |bc)
+echo "$num. $thingTodo">> $todoFile
+

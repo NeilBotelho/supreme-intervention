@@ -1,0 +1,130 @@
+#!/bin/sh
+# Playlist manager for the play script
+playlistFile="/home/neil/.local/share/myMusic/playlists/playlists"
+SAVEIFS=$IFS
+IFS=$(printf "\n\b")
+restoreIFS(){
+    IFS=$SAVEIFS
+}
+#Trap in case of exit
+trap restoreIFS INT
+
+isPlaylist(){
+	# if result is empty then not a playlist
+	name="$1"
+	results=$(cat $playlistFile | grep -e "^\[$name;")
+	echo "$results"
+}
+
+isValid(){
+	# if result is empty its not valid
+	result=$(echo "$1" |tr -d [:alnum:] )
+	if [ -z "$result" ];then
+		echo "valid"
+	else
+		echo ""
+	fi
+
+}
+playlistNameFormat(){
+	echo "Playlist name should be alphanumeric only"
+}
+
+pushFront(){
+	name=$1
+	newline=$2
+	count=$(cat $playlistFile| grep -e "\[$name;"|cut -d";" -f2|cut -d] -f1)
+	sed -i "s|\[$name;$count\]|\[$name;$(echo "$count + 1"|bc)\]\n$newline|g" $playlistFile
+}
+
+newPlaylist(){
+	name=$2
+	arg="-n"
+	longArg="--name"
+	[ -n "$(isPlaylist "$name")" ] && echo "Playlist $name already exists" && exit
+	[ -z $(isValid $name ) ] && echo "Invalid playlist name"&& playlistNameFormat && exit
+	echo "Creating playlist $name"
+	title="[$name;0]"
+	echo "$title" >> $playlistFile
+	for file in $@;do
+		if [ "$file" != "$name" ] && [ "$file" != "$arg" ] && [ "$file" != "$longArg" ];then
+			if [ -f "$file" ];then
+				file=$(readlink -e $file)
+				pushFront "$name" "$file"
+			else
+				echo "$file is not a valid track"
+			fi
+			
+		fi
+	done
+	echo "" >>$playlistFile
+
+}
+
+addToPlaylist(){
+	name=$2
+	arg="-a"
+	longArg="--add"
+	[ -z "$(isPlaylist "$name")" ] && echo "Playlist $name doesn't exist" && exit
+	echo "Adding to playist $name"
+	for file in $@;do
+		if [ "$file" != "$name" ] && [ "$file" != "$arg" ] && [ "$file" != "$longArg" ];then
+			if [ -f "$file" ];then 
+				file=$(readlink -e $file)
+				pushFront "$name" "$file"
+			else
+				echo "$file is not a valid track"
+			fi
+		fi
+	done
+}
+
+playSongs(){
+	for playlist in $@;do
+		if [ -z "$(isPlaylist "$playlist")" ];then 
+			echo "No such playlist $playlist"
+		else
+			count=$(cat $playlistFile| grep -e "\[$playlist;[0-9]*\]"| cut -d";" -f2 |cut -d] -f1)
+			songs=$(cat $playlistFile| grep -A $count -e "\[$playlist;[0-9]*\]"| cut -d";" -f2 |cut -d] -f1|tail -$count)
+			for song in $songs;do
+				play "$song"
+			done
+		fi
+	done
+}
+
+getPlaylists(){
+	entries=$(cat $playlistFile|grep -e "^\[[0-9a-zA-Z]*;[0-9]*\]")
+	echo "$entries"
+}
+
+searchTracks(){
+	selectedTrack=$(find $MUSIC_DIR -mindepth 2 -name "*"|rev|cut -d/ -f1-2|rev|grep -v "playlists"| fzf )
+	if [ -n "$selectedTrack" ];then
+		play "$MUSIC_DIR$selectedTrack"
+	else 
+		echo "No track selected"
+	fi
+	
+}
+
+printUsage(){
+    echo "USAGE: plst [OPTIONS]"
+    echo "Playlist manager for play script"
+    echo "-h | --help   print this usage information"
+    echo "-a | --add    Add songs to the start of a particular playlist"
+    echo "-l | --list   list available playlists"
+    echo "-n | --new    NAME New playlist"
+    echo "-p | --play   filter through tracks and play"
+    echo "NAME          play playlist NAME"
+}
+
+case "$1" in
+	'-h' | '--help' | '') printUsage	 ;;
+	'-a' | '--add'      ) addToPlaylist $@	 ;;
+    '-l' | '--list'     ) getPlaylists	 ;;
+	'-n' | '--new'      ) newPlaylist $@	 ;;
+	'-p' | '--play'     ) searchTracks $@	 ;;
+	*) playSongs $@;;
+esac
+restoreIFS

@@ -1,0 +1,2 @@
+#!/bin/sh
+curl wttr.in/panjim?0

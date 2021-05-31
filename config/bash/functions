@@ -1,0 +1,203 @@
+#!/bin/sh
+#Functions
+getmedia(){
+# Mount/Unmount mediaserver to $dir
+	remotePt="/usr/lib/plexmediaserver/media"
+	dir="/home/neil/Downloads/mediaserver/"
+	if [ -n "$1" ];then
+		if [ -d $dir"/movies" ];then
+			umount $dir
+			if [ 0 -eq $? ];then
+				echo "Unmounted mediaserver"
+			fi
+		else 
+			echo "Media server not mounted"
+		fi
+	elif [ -d "$dir/movies" ];then
+		echo "Media server already mounted"
+		cd $dir
+	else
+		sshfs srv:$remotePt $dir
+		if [ 0 -eq $? ];then
+			echo "Mounted media server to $dir"
+		fi
+		cd $dir
+	fi
+}
+vf(){
+#Pipe result of a fzf to vim for editing
+	currDir=$(pwd)
+	[ -n "$1" ] && [ -d $1 ] && cd $1
+	file=$(fzf --layout=reverse)
+	[ -e "$file" ] && vim -o $file
+	cd $currDir
+}
+fanset(){
+# Set fan speed
+	lvl="auto"
+	case $1 in
+		4)lvl="4";;
+		5)lvl="5";;
+	esac
+	echo "level $lvl" | sudo tee /proc/acpi/ibm/fan
+	echo "set to $lvl"
+}
+
+
+gh(){
+# Grep through history
+    if [ -z "$2" ];then
+        numLines=25
+    else
+        numLines=$2
+    fi
+
+    if [ -z "$1" ];then 
+        echo -e "Usage: gh [SEARCHTERM] \n Grep through bash history"
+    else
+        results=$(history|grep $1 |tail -$numLines)
+        if [ -n "$results" ];then
+            #Extra grep to recolorise output
+            echo "$results" |grep $1 
+        fi 
+    fi
+}   
+cdb(){
+	numSteps="$1"
+	if [ -z "$1" ];then
+		numSteps="1"
+	fi
+
+	for i in $(seq 0 $numSteps);do 
+		cd ..
+	done
+}
+
+shortPS(){
+	PS1=$(echo "$PS1" | sed "s/w/W/")
+}
+
+edsim(){
+	java -jar /home/neil/.config/edsim51di/edsim51di.jar &
+	disown
+}
+keil(){
+	wine ~/.local/share/wineprefixes/default/drive_c/Keil_v5/UV4/UV4.exe &
+	disown
+}
+graphics(){
+	docker run -ti --net=host -e DISPLAY -v /tmp/.X11-unix graphics
+	echo "Save change ?[Y/n] "
+	read confirm
+	if [ "$confirm" != "n" ];then
+		tag=$(docker ps -a |head -2|tail -1 |cut -d" " -f1)
+		docker commit $tag graphics
+	fi
+}
+#Edit shortcuts
+
+bashrc(){
+#edit bashrc and source
+    vim ~/.bashrc
+    source ~/.bashrc
+}
+
+vimrc(){
+#edit bashrc and source
+    vf ~/.config/nvim/
+}
+
+prof(){
+#edit bashrc and source
+    vim ~/.profile
+    source ~/.profile
+}
+
+al(){
+#edit alises
+	vim "$XDG_CONFIG_HOME"/bash/aliases
+	source ~/.bashrc
+}
+
+func(){
+#edit functions
+	vim "$XDG_CONFIG_HOME"/bash/functions
+	source ~/.bashrc
+}
+
+mcd() {
+#Make directory and then cd into it
+    mkdir -p $1
+    cd $1
+}
+sklc(){
+    prog=$(printf "%s\n%s\n%s\n%s" "dwm" "st" "blocks" "surf"| dmenu)
+    if [ -z "$prog" ];then
+        return
+    fi
+    file=$(printf "%s\n%s" "config.h" "$prog.c" | dmenu)
+    if [ -z "$file" ];then
+        return
+    fi
+    subl ~/Desktop/suckless/desktop-setup/"$prog"/"$file"
+}
+
+
+
+extract(){
+#decompress just about any compressed file format
+if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+    return 1
+ else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.gz)        gunzip ./"$n"      ;;
+            ## unrar command not available in debian
+            #*.rar)       unrar x -ad ./"$n" ;;
+            *.rar)       unrar-free -x ./"$n" ;;
+            *.zip)       unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
+}
+
+function cond(){
+	[ -d ~/.config/.conda ] && mv ~/.config/.conda ~/.conda
+
+	# >>> conda initialize >>>
+	# !! Contents within this block are managed by 'conda init' !!
+	__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+	if [ $? -eq 0 ]; then
+		eval "$__conda_setup"
+	else
+		if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+			. "/opt/miniconda3/etc/profile.d/conda.sh"
+		else
+			export PATH="/opt/miniconda3/bin:$PATH"
+		fi
+	fi
+	unset __conda_setup
+	# <<< conda initialize <<<
+}

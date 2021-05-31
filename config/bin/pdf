@@ -1,0 +1,31 @@
+#!/bin/sh
+SAVEIFS=$IFS
+
+restoreIFS(){
+    IFS=$SAVEIFS
+}
+
+#Trap in case of exit
+trap restoreIFS INT
+
+tempFile=$(find /tmp -maxdepth 1 -name "zathuraLog*" |head -1)
+if [ -z "$tempFile" ]; then
+	tempFile=$(mktemp /tmp/zathuraLog.XXXXX)
+else
+	tempFile="$tempFile"
+fi
+# set  Field separator
+IFS=$(printf "\n\b")
+
+for file in "$@"
+do
+    if [ -f "$file" ];then
+        zathura "$file" > "$tempFile" 2>&1  &
+        echo "Opening $file"
+    else
+        echo "$file does not exist"
+    fi
+done
+
+# restore $IFS
+IFS=$SAVEIFS

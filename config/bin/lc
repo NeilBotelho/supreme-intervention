@@ -1,0 +1,11 @@
+#!/bin/sh
+# lc = Latex Clean
+# Clears temp files created by latexmk for creating pdfs from tex
+
+if [ -n "$1" ]  ;then
+	folder=$(echo "$1"|rev | cut -d/ -f 2- |rev)
+	[ -d "$1" ] && cd $folder
+	echo $folder
+fi
+rm *.log *.fls *.toc *.out *.synctex.gz *.fdb_latexmk *.aux *.dvi *.synctex\(busy\) 2> /dev/null
+

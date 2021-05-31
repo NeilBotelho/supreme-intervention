@@ -1,0 +1,12 @@
+#!/bin/sh
+toggleFile="/tmp/screenkeyToggle"
+if [ -f $toggleFile ];then
+	pkill screenkey
+	notify-send "screenkey off"
+	rm $toggleFile
+else
+	screenkey -t 0.5 -s small --opacity 0.4 &
+	touch $toggleFile
+	notify-send "screenkey on"
+fi
+
