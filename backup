@@ -26,7 +26,7 @@ syncHome(){
 syncConfigs(){
 	# .config folders
 	echo "Syncing config directory"
-	configDotFolders="bash/ git/ sxhkd/ nvim/ readline/ zathura/ mpv/ bin/ X11/ alacritty/ dunst/ psd/ python/ tmux/"
+	configDotFolders="bash/ git/ sxhkd/ nvim/ readline/ zathura/ mpv/ bin/ X11/ alacritty/ dunst/ psd/ python/ tmux/ fontconfig/"
 	remove="$XDG_CONFIG_HOME/mpv/watch_later/"
 	
 	for folder in $configDotFolders;

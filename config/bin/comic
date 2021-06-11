@@ -55,7 +55,6 @@ def getImage(imageUrl,path=None):
     else:
         print("Something went wrong getting the image")
         exit()
-        return 0
 
 def getRandom():
     url="https://c.xkcd.com/random/comic/"

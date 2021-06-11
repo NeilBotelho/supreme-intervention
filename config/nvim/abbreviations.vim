@@ -1,5 +1,5 @@
 iabbrev @@ neil.botelho321@gmail.com
-iabbrev tihs this
+	iabbrev tihs this
 " Command mode misspellings{{{
 cnoreabbrev W! w!
 cnoreabbrev Q! q!

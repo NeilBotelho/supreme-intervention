@@ -26,7 +26,6 @@ alias ex="extract"
 alias rmf="rm -r"
 alias sensor="watch -n 1 sensors"
 alias ports="netstat -tulanp"
-
 #Edit aliases
 alias binds="vim ~/.config/sxhkd/sxhkdrc"
 alias xrc="vim ~/.config/X11/xinitrc"
@@ -39,7 +38,6 @@ alias claer="clear"
 alias sulb="subl"
 
 #Application Aliases
-alias vim="nvim"
 alias p="python3"
 alias ps="python3.7"
 alias clip="xclip -sel clip"
@@ -54,6 +52,10 @@ alias cat="bat --theme 'Monokai Extended'"
 alias Cat="/usr/bin/cat"
 alias emacs="echo 'Dont do this again please'"
 alias vimt="vim /home/neil/.config/tmux/tmux.conf"
+alias jira="firefox https://team-1623308335956.atlassian.net/jira/software/projects/"
+alias trello="firefox trello.com"
+
+
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
 

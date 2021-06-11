@@ -15,13 +15,13 @@ breaklines=true
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{imgs/#1.png}
-		\caption*{Output of program  #1}
+		\caption*{Figure  #1}
 	\end{figure}
 }
 
-\title{Expt 7: Input Output Port Programming} 
+\title{}
 \author{Neil Botelho, 181105010}
-\date{03/05/2021}
+\date{\today}
 
 \begin{document}
 {\bfseries\maketitle}

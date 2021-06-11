@@ -1,6 +1,6 @@
 #!/bin/sh
 RC="/home/neil/.config/alacritty/alacritty.yml"
-defaultValue=0.7
+defaultValue=0.8
 if [ -z "$1" ];then
 	newvalue=$(echo "$defaultValue")
 else

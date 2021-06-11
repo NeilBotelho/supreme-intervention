@@ -1,0 +1,37 @@
+#!/bin/sh
+SAVEIFS=$IFS
+
+restoreIFS(){
+    IFS=$SAVEIFS
+}
+
+#Trap in case of exit
+trap restoreIFS INT
+
+IFS=$(printf "\n\b")
+
+
+for item in $(find);do
+	if [ -d $item ];then
+		chmod 755 $item
+		echo "$item is a folder"
+	else
+		chmod 644 $item
+		echo "$item is a file"
+	fi
+done
+
+restoreIFS
+# bse=$(pwd)
+# itemStack=$(ls $bse)
+# dirStack="./"
+# traverseDir(){
+# 	itemStack="$dirStack $bse/$1"
+# }
+
+# while [ -n "$dirStack" ];do
+# 	itemStack="$itemStack $dirStack"
+# 	dirStack=""
+# 	for item in $itemStack;do
+# 	done
+# done

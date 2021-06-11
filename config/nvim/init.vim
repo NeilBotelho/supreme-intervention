@@ -30,6 +30,13 @@ nnoremap <leader>R :%s/
 "
 nnoremap Q <Nop> 
 "}}}
+"Tab navigation{{{
+"
+nnoremap  <C-j> <C-PageDown>
+nnoremap  <C-k> <C-PageUp>
+nnoremap <C-Tab> :tabn<CR>
+
+"}}}
 "Vim Fugitive maps{{{
 "
 nmap <leader>gs :G<CR><C-w>o
@@ -45,12 +52,11 @@ nmap <leader>O :FRg<CR>
 nmap <leader>b :Buffers<CR>
 
 "}}}
-"Tab navigation{{{
-"
-nnoremap  <C-j> <C-PageDown>
-nnoremap  <C-k> <C-PageUp>
-nnoremap <C-Tab> :tabn<CR>
-
+"Mundo maps{{{
+nnoremap tz :MundoToggle<CR>
+let g:mundo_width = 70
+let g:mundo_preview_height = 15
+let g:mundo_right = 1
 "}}}
 " Window maps{{{
 "
@@ -88,8 +94,15 @@ let g:netrw_altv=1
 let g:netrw_liststyle=3
 let g:netrw_browse_split=4
 let g:netrw_usetab=1
-nnoremap <leader>T :Lexplore 20<CR>
+" nnoremap <leader>T :Lexplore 20<CR>
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
+
 " }}}
+" NERDTree settings{{{
+nnoremap <leader>T :NERDTree<CR>
+"}}}
 "PresentationMode{{{
 "
  " nnoremap <leader>P :call TogglePresentationMode()<CR>
@@ -115,9 +128,9 @@ set number
 set noerrorbells
 set shortmess="<Enter>"
 set expandtab
-set	tabstop=4
+set	tabstop=2
 set softtabstop=0 noexpandtab
-set shiftwidth=4
+set shiftwidth=2
 set smartindent
 set nobackup
 set undodir=~/.local/share/nvim/undodir
@@ -137,7 +150,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Declare the list of plugins.
 Plug 'ericbn/vim-relativize'
 Plug 'kshenoy/vim-signature'
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
 Plug 'lervag/vimtex'
 Plug 'tpope/vim-fugitive'
@@ -146,8 +159,16 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'
 Plug 'junegunn/goyo.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chrisbra/csv.vim'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'itchyny/lightline.vim'
+Plug 'simnalamburt/vim-mundo'
+" Plug "ap/vim-css-color" 
+" Plug 'sgur/vim-editorconfig' " Might need later
 call plug#end()
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
@@ -157,7 +178,7 @@ colorscheme gruvbox
 so /home/neil/.config/nvim/functions.vim
 
 " Latexmk settings
-so /home/neil/.config/nvim/tex.vim
+so /home/neil/.config/nvim/plugins/tex.vim
 
 " Runners setttings
 so /home/neil/.config/nvim/runners.vim
@@ -166,14 +187,19 @@ so /home/neil/.config/nvim/runners.vim
 so /home/neil/.config/nvim/abbreviations.vim
 
 " Fzf settings
-so /home/neil/.config/nvim/fzf.vim
+so /home/neil/.config/nvim/plugins/fzf.vim
 
 "Snippets
 so /home/neil/.config/nvim/snippets.vim
 
 "Coc settings
-so /home/neil/.config/nvim/coc.vim
+so /home/neil/.config/nvim/plugins/coc.vim
 
+"Lightline settings
+so /home/neil/.config/nvim/plugins/lightline.vim
+
+"NERDTree settings
+" so /home/neil/.config/nvim/plugins/nerdtree.vim
 "}}}
 " Vimscript file settings {{{
 augroup filetype_vim

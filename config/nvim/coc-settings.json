@@ -2,5 +2,29 @@
 "suggest.noselect":false,
 "suggest.enablePreselect": true,
 "suggest.floatEnable": false,
-"suggest.maxCompleteItemCount":10
+"suggest.maxCompleteItemCount":10,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    }
+
 }

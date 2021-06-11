@@ -16,6 +16,7 @@ export DISK1MONITOR="$XDG_DATA_HOME/ssd_monitor/1"
 export DISK2MONITOR="$XDG_DATA_HOME/ssd_monitor/2"
 
 #Applications
+export NLTK_DATA="$XDG_DATA_HOME/nltk_data"
 export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export HISTFILE="$XDG_CONFIG_HOME/bash/history"

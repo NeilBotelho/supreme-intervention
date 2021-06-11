@@ -1,8 +1,8 @@
 #!/bin/sh
 	isCharging=$(acpi|awk 'BEGIN{ FS=" ";}{print $3}' |cut -c1)
 	chargingIndicator=""
-	[ "$isCharging" = "C" ] && chargingIndicator="" 
-	[ "$isCharging" = "U" ] && chargingIndicator=""
+	[ "$isCharging" = "C" ] && chargingIndicator="" 
+	[ "$isCharging" = "U" ] && chargingIndicator=""
 
 	percentage="$(cat /sys/class/power_supply/BAT0/capacity)"
 	case "$percentage" in
@@ -12,7 +12,7 @@
 		4[0-9]|3[0-9])	status="   "$chargingIndicator ;;
 		*)		status="   "$chargingIndicator 		;;
 	esac
-	status="$status$percentage%"
+	status="$status $percentage%"
 	echo "$status "	
     isCharging=$(echo "$charging"|grep -i "c")
 	if [ -z "$chargingIndicator" ];then
