@@ -23,25 +23,6 @@ syncHome(){
 	printSeparator
 }
 
-syncConfigs(){
-	# .config folders
-	echo "Syncing config directory"
-	configDotFolders="bash/ git/ sxhkd/ nvim/ readline/ zathura/ mpv/ bin/ X11/ alacritty/ dunst/ psd/ python/ tmux/ fontconfig/"
-	remove="$XDG_CONFIG_HOME/mpv/watch_later/"
-	
-	for folder in $configDotFolders;
-	do
-	    rsync -uaizP$verbose$dryRun --exclude="history wallpapers .Xauthority" $home"/.config/"$folder $dotfilesReciever"/config/$folder"
-	done
-	for folder in $remove;
-	do
-		rm -rf $folder
-	done
-	pyHistExists=$(ls $XDG_CONFIG_HOME/python/ | grep python_history )
-	[ -n  "$pyHistExists" ] && rm $XDG_CONFIG_HOME/python/python_history*  
-
-	echo "#############################################"
-}
 
 syncShare(){
 	# .local.share folders
