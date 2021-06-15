@@ -81,7 +81,12 @@ cdb(){
 }
 
 shortPS(){
-	PS1=$(echo "$PS1" | sed "s/w/W/")
+	isShort=$(echo "$PS1" |grep "w")
+	if [ -z "$isShort" ];then
+		PS1=$(echo "$PS1" | sed "s/W/w/")
+	else
+		PS1=$(echo "$PS1" | sed "s/w/W/")
+	fi
 }
 
 #College stuff
