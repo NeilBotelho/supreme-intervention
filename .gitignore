@@ -2,3 +2,5 @@ config/bash/history
 config/bin/play
 config/bash/.Xauthority
 config/python/python_history
+config/bin/rofiKeepass
+config/bin/rst/
