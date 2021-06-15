@@ -39,14 +39,12 @@ alias sulb="subl"
 
 #Application Aliases
 alias p="python3"
-alias ps="python3.7"
 alias clip="xclip -sel clip"
 alias build="sudo make clean install"
 alias jup="jupyter notebook"
 alias xfce="startxfce4"
 alias urxvt='urxvt -bg "#1b1c1b" -fg "#ffffff" -fn "xft:Bitst'
 alias musicDownload="youtube-dl -x"
-#alias vhdl="wine /home/neil/.local/share/wineprefixes/default/drive_c/Modeltech_pe_edu_10.4a/win32pe_edu/modelsim.exe"
 alias ma="sshfs 192.168.0.118:/storage/emulated/0/  ~/Downloads/Android/ -p 2222" 
 alias cat="bat --theme 'Monokai Extended'"
 alias Cat="/usr/bin/cat"
@@ -54,7 +52,7 @@ alias emacs="echo 'Dont do this again please'"
 alias vimt="vim /home/neil/.config/tmux/tmux.conf"
 alias jira="firefox https://team-1623308335956.atlassian.net/jira/software/projects/"
 alias trello="firefox trello.com"
-
+alias rstLearn="rustup doc --book"
 
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
@@ -86,4 +84,9 @@ alias functions="grep --color=always -A 1 '(){' '$XDG_CONFIG_HOME'/bash/function
 
 #For clearing home
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+
+
+
+#Archive
+#alias vhdl="wine /home/neil/.local/share/wineprefixes/default/drive_c/Modeltech_pe_edu_10.4a/win32pe_edu/modelsim.exe"
 
