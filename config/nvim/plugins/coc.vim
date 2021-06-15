@@ -3,12 +3,13 @@ let g:coc_global_extensions = [
 	\'coc-yaml',
 	\'coc-texlab',
 	\'coc-sh',
-	\'coc-rust-analyzer',
+  \'coc-rust-analyzer',
 	\'coc-pyright',
 	\'coc-pydocstring',
 	\'coc-json',
 	\'coc-go',
 	\]
+
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -149,3 +150,5 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+"Show Diagnostic map
+nnoremap <leader>D :CocDiagnostics<CR>

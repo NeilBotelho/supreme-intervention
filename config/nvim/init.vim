@@ -1,11 +1,10 @@
 "INTERACTIVE MODE MAPS{{{
-
 let mapleader=" "
 imap jj <Esc>
 imap <C-h> <Esc>hi
 imap <C-j> <Esc>ji
 imap <C-k> <Esc>ki
-imap <C-l> <Esc>li
+imap <C-l> <Esc>la
 
 "}}}
 "NORMAL MODE MAPS{{{
@@ -95,7 +94,7 @@ let g:netrw_liststyle=3
 let g:netrw_browse_split=4
 let g:netrw_usetab=1
 " nnoremap <leader>T :Lexplore 20<CR>
-let g:loaded_netrw       = 1
+" let g:loaded_netrw       = 1 "Comment out for gx support 
 let g:loaded_netrwPlugin = 1
 
 
@@ -167,11 +166,12 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'itchyny/lightline.vim'
 Plug 'simnalamburt/vim-mundo'
-" Plug "ap/vim-css-color" 
+" Plug 'ap/vim-css-color' 
 " Plug 'sgur/vim-editorconfig' " Might need later
 call plug#end()
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
+
 " }}}
 " Sourcing external vim modules {{{
 " Custom Functions

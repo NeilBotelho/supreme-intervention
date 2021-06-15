@@ -2,9 +2,18 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{listings}
-\usepackage{amsmath}
 \usepackage[labelformat=empty]{caption}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
 \lstset{
 basicstyle=\small\ttfamily,
 columns=flexible,
