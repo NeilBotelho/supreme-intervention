@@ -50,7 +50,9 @@ fanset(){
 	echo "set to $lvl"
 }
 
-
+tst(){
+	mkdir /tmp/tst
+}
 gh(){
 # Grep through history
     if [ -z "$2" ];then
@@ -89,6 +91,14 @@ shortPS(){
 	fi
 }
 
+randomStorage(){
+	if [ -d "$1" ];then
+		sudo mount /dev/nvme1n1p5 $1
+	else
+		echo "$1 is not a valid directory"
+	fi
+
+}
 #College stuff
 edsim(){
 	pushd /tmp 1> /dev/null
