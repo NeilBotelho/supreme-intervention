@@ -1,5 +1,6 @@
 #!/bin/sh
 echo "Are you sure you want to restore?[Y/n]"
+read ans
 if [ "$ans" = "Y" ];then
 	cp -r ./etc/* /etc/
 	cp -r ./home/* /home/$USER/
