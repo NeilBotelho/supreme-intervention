@@ -1,4 +1,0 @@
-#!/bin/sh
-if [ -f /home/$USER/.local/share/vax/notifications ];then
-	notify-send "New vaccines"
-fi
