@@ -1,5 +1,6 @@
 #!/bin/sh
-#Functions
+# Functions 
+
 blocks(){
 	pkill dwmblocks
 	dwmblocks &
@@ -52,6 +53,7 @@ fanset(){
 
 tst(){
 	mkdir /tmp/tst
+	pushd /tmp/tst
 }
 gh(){
 # Grep through history
@@ -99,6 +101,12 @@ randomStorage(){
 	fi
 
 }
+
+nvimdev(){
+	nvim --cmd "set rtp+=$(pwd)" $@
+
+}
+
 #College stuff
 edsim(){
 	pushd /tmp 1> /dev/null
@@ -214,21 +222,43 @@ if [ -z "$1" ]; then
 fi
 }
 
-function cond(){
-	[ -d ~/.config/.conda ] && mv ~/.config/.conda ~/.conda
-
-	# >>> conda initialize >>>
-	# !! Contents within this block are managed by 'conda init' !!
-	__conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-		eval "$__conda_setup"
+cond(){
+	if [ -n "$1" ];then 
+			[ -d ~/.conda ] && mv ~/.conda ~/.config/.conda && conda deactivate
 	else
-		if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-			. "/opt/miniconda3/etc/profile.d/conda.sh"
+		[ -d ~/.config/.conda ] && mv ~/.config/.conda ~/.conda
+
+		# >>> conda initialize >>>
+		# !! Contents within this block are managed by 'conda init' !!
+		__conda_setup="$('/home/neil/.config/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+		if [ $? -eq 0 ]; then
+				eval "$__conda_setup"
 		else
-			export PATH="/opt/miniconda3/bin:$PATH"
+				if [ -f "/home/neil/.config/miniconda3/etc/profile.d/conda.sh" ]; then
+						. "/home/neil/.config/miniconda3/etc/profile.d/conda.sh"
+				else
+						export PATH="/home/neil/.config/miniconda3/bin:$PATH"
+				fi
 		fi
+		unset __conda_setup
+		# <<< conda initialize <<<
 	fi
-	unset __conda_setup
-	# <<< conda initialize <<<
 }
+
+texmanager(){
+	 if [ -n "$1" ];then 
+			mv ~/.config/texlive ~/.texlive
+	 else
+			[ -d ~/.texlive ] && mv ~/.texlive ~/.config/texlive
+	 fi
+}
+
+vscode(){
+	 
+	 if [ -n "$1" ];then 
+			[ -d ~/.vscode ] && mv ~/.vscode ~/.config/vscode && mv ~/.vscode-oss/ ~/.config/vscode-oss
+	 else
+			[ -d ~/.config/vscode ] && mv ~/.config/vscode ~/.vscode && mv ~/.config/vscode-oss ~/.vscode-oss
+	 fi
+}
+
