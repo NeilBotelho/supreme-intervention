@@ -13,28 +13,6 @@ endfunction
 nnoremap tt : call Toggle_transparent()<CR>
 
 "}}}
-"Fzf specific {{{
-"
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
-
-
-function! FzfFromRg(query, fullscreen)
-  let command_fmt = 'rg --files|sed "s/$/:0/"'
-  let initial_command = printf(command_fmt)
-  let reload_command = printf(command_fmt)
-  let spec = {'options': ['--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-command! -nargs=* -bang FRg call FzfFromRg(<q-args>, <bang>0)
-
-"}}}
 " PresentMode {{{
 " let s:presentMode=0
 " function! TogglePresentationMode()
@@ -90,7 +68,7 @@ function! TerminalOpen()
     " disable line numbers
     setlocal nonumber norelativenumber
     " Moves to the window the right the current one
-    " wincmd L
+    wincmd L
     let s:term_job_id = termopen($SHELL, { 'detach': 1 })
 
      " Change the name of the buffer to "Terminal 1"
@@ -106,7 +84,7 @@ function! TerminalOpen()
     if !win_gotoid(s:term_window)
     split
     " Moves to the window below the current one
-    " wincmd L   
+    wincmd L   
     buffer Terminal\ 1
      " Gets the id of the terminal window
      let s:term_window = win_getid()

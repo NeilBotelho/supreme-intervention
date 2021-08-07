@@ -5,8 +5,10 @@ let g:coc_global_extensions = [
 	\'coc-sh',
   \'coc-rust-analyzer',
 	\'coc-pyright',
+  \'coc-tsserver',
 	\'coc-pydocstring',
 	\'coc-json',
+	\'coc-tsserver',
 	\'coc-go',
 	\]
 

@@ -1,10 +1,16 @@
 #!/bin/sh
 
+if [ -z "$@" ];then
+	echo "Usage: buildSystem path/file_name of type c|c++|java|go|tex>|any executable"
+	echo "Example: buildSystem <path/file_name_1.c>"
+	exit
+fi
 args=""
 for i in $@;do
 	args="$args $i"
 done
 args=$(echo "$args"|cut -c2-)
+
 
 c "$args"
 echo "[ Press any key to continue ]"

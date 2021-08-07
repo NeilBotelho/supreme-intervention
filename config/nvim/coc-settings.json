@@ -1,29 +1,42 @@
 {
-"suggest.noselect":false,
-"suggest.enablePreselect": true,
-"suggest.maxCompleteItemCount":10,
-    "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "objc",
-                "objcpp"
-            ],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "cache": {
-                    "directory": "/tmp/ccls"
-                }
-            }
-        }
-    }
-
+	"suggest.noselect": false,
+	"suggest.enablePreselect": false,
+	"coc.preferences.formatOnSaveFiletypes": [
+		"javascript",
+		"typescript",
+		"typescriptreact",
+		"json",
+		"javascriptreact",
+		"typescript.tsx",
+		"css",
+		"Markdown",
+		"html",
+		"python"
+	],
+	"python.formatting.autopep8Args": [
+		"--aggressive"
+	],
+	"languageserver": {
+		"ccls": {
+			"command": "ccls",
+			"filetypes": [
+				"c",
+				"cpp",
+				"objc",
+				"objcpp"
+			],
+			"rootPatterns": [
+				".ccls",
+				"compile_cmmands.json",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"initializationOptions": {
+				"cache": {
+					"directory": "/tmp/ccls"
+				}
+			}
+		}
+	}
 }
