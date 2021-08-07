@@ -195,10 +195,12 @@ else
 	    *.cpp)  cppFile $isPath"$1" "$Args" ;;
 	    *.java) javaFile $isPath"$1" "$Args" ;;
 	    *.go)   goFile $isPath"$1" "$Args" ;;
-	    *.rs)   rustFile $isPath"$1" "$Args";;
+	    *.rs)   cargo check && cargo run;;
+	    # *.rs)   rustFile $isPath"$1" "$Args";;
 	    *.py)   python $isPath"$1" "$Args";;
+	    *.js)   node $isPath"$1" "$Args";;
 	    *.lua)  lua $isPath"$1" "$Args";;
-		*.tex)  for file in $@;do
+			*.tex)  for file in $@;do
 					latexFile $isPath$file
 	 	        done;;
 	    *)    shellScript $isPath$1 $Args;; #if [ -x $1 ]; then
