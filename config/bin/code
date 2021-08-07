@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SAVEIFS=$IFS
+
+restoreIFS(){
+    IFS=$SAVEIFS
+}
+
+#Trap in case of exit
+trap restoreIFS INT
+
+if [ "$1" = "a" ];then 
+		echo "remove vscode home directories"
+		[ -d ~/.vscode ] && mv ~/.vscode ~/.config/.vscode && mv ~/.vscode-oss/ ~/.config/.vscode-oss
+else
+		mv ~/.config/.vscode ~/.vscode && mv ~/.config/.vscode-oss/ ~/.vscode-oss
+		IFS=$(printf "\n\b")
+		/usr/bin/code $@
+		restoreIFS
+fi
+
+
