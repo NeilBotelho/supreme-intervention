@@ -1,7 +1,7 @@
 #!/bin/sh	
 
 time=$(date '+%b %d (%a) %I:%M%p')
-echo " $time "
+echo "$time "
 
 case $BLOCK_BUTTON in
 	3)$TERMINAL -e "$EDITOR" "$0"; pkill -RTMIN+1 dwmblocks

@@ -21,7 +21,7 @@ XF86AudioMute
 
 XF86AudioMicMute
 	amixer sset Capture toggle
-Wifi reset map
+#Wifi reset map
 alt + r
     pkill -RTMIN+4 dwmblocks; pkill -RTMIN+3 dwmblocks
 
@@ -36,3 +36,11 @@ alt+shift+e
 #toggle screenkey
 super + s
 	toggleScreenKey
+
+#screenshot 
+control+Print
+	 
+
+# screen turning
+control+alt + {Left,Right,Up}
+	xrandr --output eDP --rotate {left,right,normal}

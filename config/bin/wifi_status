@@ -33,7 +33,7 @@ if [ -z "$ssid" ];then
             pkill -RTMIN+4 dwmblocks
         fi
 else
-    echo " $ssid  "
+    echo "$ssid  "
 fi
 if [ -d /sys/class/net/enp1s0/operstate ] 
 then 

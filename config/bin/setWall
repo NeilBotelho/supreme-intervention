@@ -53,11 +53,16 @@ getPrevious(){
 }
 
 setWallpaper(){
-	nitrogen --set-auto $1 &
-	if [ $? = 0 ];then 
-		echo "$1" > $currFile
+  if [ -f "$1" ];then
+		 nitrogen --set-auto $1 &
+		 if [ $? = 0 ];then 
+			 echo "$1" > $currFile
+		 fi
+		 echo "$1"
+	else
+		 echo "file $1 does not exist"
+		 exit
 	fi
-	echo "$1"
 }
 
 
@@ -74,8 +79,9 @@ else
             ;;
         "-d") stack=$(makeStack $dark)
             ;;
-		"-f")stack=$(makeStack $favourites)
-			;;
+				"-f")stack=$(makeStack $favourites)
+						;;
+				"-S")setWallpaper $2 ;;
         "-p") stack=$(makeStack $safe $dark $unsorted $favourites)
               next=$(getPrevious "$stack")
               setWallpaper $next

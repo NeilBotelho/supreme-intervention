@@ -1,13 +1,15 @@
 #!/bin/sh
 
 # scriptName=$0
-files=$(ls)
+files=$(ls ../test)
 
 for i in $files; do
     case $i in
     	*.jpg|*.png)
-	    	echo "$i"
-	        setWall -S $i
+				 f=$( readlink -e ../test/$i)
+
+	    	echo "$f"
+				setWall -S $( readlink -e ../test/$i)
 	        echo "Keep [Y/n]?"
 	        read del
 	        if [ "$del" = "n" ]; then
