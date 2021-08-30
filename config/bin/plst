@@ -87,7 +87,7 @@ playSongs(){
 			count=$(cat $playlistFile| grep -e "\[$playlist;[0-9]*\]"| cut -d";" -f2 |cut -d] -f1)
 			songs=$(cat $playlistFile| grep -A $count -e "\[$playlist;[0-9]*\]"| cut -d";" -f2 |cut -d] -f1|tail -$count)
 			for song in $songs;do
-				play "$song"
+				play -m "$song"
 			done
 		fi
 	done
@@ -96,6 +96,21 @@ playSongs(){
 getPlaylists(){
 	entries=$(cat $playlistFile|grep -e "^\[[0-9a-zA-Z]*;[0-9]*\]")
 	echo "$entries"
+}
+
+describePlaylist(){
+	local playlist=$1
+	entries=$(getPlaylists|grep "$playlist"|head -1)
+	if [ -z "$entries" ];then 
+		echo "No such playlist $playlist"
+	else 
+		playlist=$(echo "$entries" |sed "s/\[\(.*\);\(.*\)\]/\1/")
+		count=$(echo "$entries" |sed "s/\[\(.*\);\(.*\)\]/\2/")
+		songs=$(cat $playlistFile| grep -A $count -e "\[$playlist;[0-9]*\]"| cut -d";" -f2 |cut -d] -f1|tail -$count)
+		for song in $songs;do
+			echo "$song"|awk -F/ '{print $NF}'
+		done
+	fi
 }
 
 searchTracks(){
@@ -122,7 +137,11 @@ printUsage(){
 case "$1" in
 	'-h' | '--help' | '') printUsage	 ;;
 	'-a' | '--add'      ) addToPlaylist $@	 ;;
-    '-l' | '--list'     ) getPlaylists	 ;;
+    '-l' | '--list'     ) if [ -z "$2" ];then
+														getPlaylists 
+													else
+														describePlaylist $2
+													fi;;
 	'-n' | '--new'      ) newPlaylist $@	 ;;
 	'-p' | '--play'     ) searchTracks $@	 ;;
 	*) playSongs $@;;
