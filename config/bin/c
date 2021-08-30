@@ -41,7 +41,12 @@ cppFile(){
 #Quickly compile and run C++ code
    cFile=$(echo "$1"|rev |cut -d"/" -f1|rev|cut -d. -f1)
    # cFile=$(echo "$cFile"|cut -d. -f1)
-   make -s "$cFile"
+	 isGraphics=$(cat $1 | grep "#include<graphics.h>")
+	 if [ -z "$isGraphics" ];then
+		 g++ $1 -o "$cFile"
+	 else
+		 g++ $1 -lgraph  -o $cFile
+	 fi
    #If no error run executable
    if [ $? -eq 0 ]
    then
@@ -59,7 +64,7 @@ cppFile(){
 		./$cFile $args
    fi
    #If executable was made delete it
-   if [ -f $cFile ]
+   if [ -f $cFile ] && [ -z "$isGraphics" ]
    then
        rm $cFile
    fi
