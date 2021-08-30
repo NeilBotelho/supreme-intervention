@@ -25,13 +25,7 @@ XF86AudioMicMute
 alt + r
     pkill -RTMIN+4 dwmblocks; pkill -RTMIN+3 dwmblocks
 
-#Quick search map
-alt +shift + p 
-    surf
 
-#Subl map
-alt+shift+e
-    subl
 
 #toggle screenkey
 super + s
