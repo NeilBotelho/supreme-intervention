@@ -1,0 +1,13 @@
+-- local function f()
+-- 	local x=5
+-- 	print(x)
+-- end
+-- function GetInput()
+-- 	local inp=vim.fn.input("hello: \n")
+-- 	print("\n",vim.inspect(inp))
+-- end
+-- function SearchAndReplace()
+-- 	local FindTerm=":/"..vim.fn.input("Find:")
+-- 	vim.cmd(FindTerm)
+-- 	vim.normal("cgn")
+-- end
