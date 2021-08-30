@@ -1,6 +1,6 @@
 config/bash/history
 config/bin/play
-config/nvim/archive
+config/nvim/.archive
 config/bash/.Xauthority
 config/python/python_history
 config/bin/rofiKeepass
