@@ -2,7 +2,10 @@
 vim.cmd('let g:cache_dir="/tmp/vim_cache/"')
 vim.opt.directory=vim.g.cache_dir.."swp"
 -- Folding
+
 vim.cmd([[
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 augroup folding
 	 au!
     autocmd BufNewFile,BufRead,BufWrite * set foldmethod=expr
