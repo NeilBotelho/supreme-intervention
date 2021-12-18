@@ -8,16 +8,17 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 augroup folding
 	 au!
-    autocmd BufNewFile,BufRead,BufWrite * set foldmethod=expr
+    autocmd BufNewFile,BufRead * set foldmethod=expr
+    autocmd BufNewFile html set foldmethod=expr
 		au FileType sh let g:sh_fold_enabled=5
 		au FileType sh let g:is_bash=1
 		au FileType sh set foldmethod=syntax
-    autocmd BufWrite,BufRead *.tex setlocal foldmethod=marker
-    autocmd BufWrite,BufRead *.lua setlocal foldmethod=marker
-    autocmd BufWrite,BufRead functions setlocal foldmethod=marker
-    autocmd BufWrite,BufRead functions setlocal foldmethod=marker
-    autocmd BufWrite,BufRead aliases setlocal foldmethod=marker
-    autocmd BufRead,BufWrite *.vim setlocal foldmethod=marker
+    autocmd BufNewFile,BufRead *.tex setlocal foldmethod=expr
+    autocmd BufNewFile,BufRead *.lua setlocal foldmethod=marker
+    autocmd BufNewFile,BufRead functions setlocal foldmethod=marker
+    autocmd BufNewFile,BufRead functions setlocal foldmethod=marker
+    autocmd BufNewFile,BufRead aliases setlocal foldmethod=marker
+    autocmd BufNewFile,BufRead *.vim setlocal foldmethod=marker
 augroup END
 ]])
 

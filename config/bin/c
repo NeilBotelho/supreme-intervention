@@ -118,7 +118,9 @@ rustFile(){
 	fi
 }
 
-
+cargoRun(){
+	cargo check && RUST_BACKTRACE=1 cargo run;
+}
 goFile(){
   refactoredCode=$(goimports "$1") 
   if [ -z "$refactoredCode" ];then
@@ -200,14 +202,16 @@ else
 	    *.cpp)  cppFile $isPath"$1" "$Args" ;;
 	    *.java) javaFile $isPath"$1" "$Args" ;;
 	    *.go)   goFile $isPath"$1" "$Args" ;;
-	    *.rs)   cargo check && cargo run;;
+	    *.rs)  	cargoRun ;;
 	    # *.rs)   rustFile $isPath"$1" "$Args";;
 	    *.py)   python $isPath"$1" "$Args";;
 	    *.js)   node $isPath"$1" "$Args";;
 	    *.lua)  lua $isPath"$1" "$Args";;
 			*.tex)  for file in $@;do
-					latexFile $isPath$file
-	 	        done;;
+								latexFile $isPath$file
+							done;;
+			*.l)    lex $isPath"$1" ;;
+			*.html) prettier -w $isPath"$1" ;;
 	    *)    shellScript $isPath$1 $Args;; #if [ -x $1 ]; then
 	           #;;
 	  esac

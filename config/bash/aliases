@@ -1,8 +1,10 @@
 #!/bin/sh
 
 #Navigation aliases
+alias pres="cd ~/Desktop/presentation/"
+alias ircish="cd ~/.local/share/projects/old/IRCish"
 alias skl="cd ~/Desktop/suckless/"
-alias skewl="cd ~/Desktop/skewl/sem6"
+alias skewl="cd ~/Desktop/skewl/sem7"
 alias scripts="cd ~/.local/bin"
 alias bins="cd ~/.config/bin/"
 alias binrs="cd ~/.config/bin/rst"
@@ -15,8 +17,14 @@ alias msk="cd ~/.local/share/myMusic/"
 alias todo="vim ~/.local/store/todo/todo"
 alias wrk="cd ~/projects/work"
 alias work="wrk"
-alias wrkfl="cd ~/.local/share/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
-alias ibmfl="cd ~/.local/share/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
+alias wt="/home/neil/Desktop/skewl/sem7/webtech/"
+alias bda="cd /home/neil/Desktop/skewl/sem7/bda/"
+alias dm="cd /home/neil/Desktop/skewl/sem7/dm/"
+alias ip="cd /home/neil/Desktop/skewl/sem7/ip/"
+alias cc="cd /home/neil/Desktop/skewl/sem7/cc/"
+
+# alias wrkfl="cd ~/.local/share/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
+# alias ibmfl="cd ~/.local/share/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
 
 #Shortforms 
 alias cl="clear"
@@ -41,6 +49,8 @@ alias sulb="subl"
 #Application Aliases
 alias p="python3"
 alias clip="xclip -sel clip"
+alias clipp="xclip -selection clipboard -t image/png"
+alias clipj="xclip -selection clipboard -t image/jpg"
 alias build="sudo make clean install"
 alias jup="jupyter notebook"
 alias xfce="startxfce4"
@@ -54,15 +64,16 @@ alias vimt="vim /home/neil/.config/tmux/tmux.conf"
 alias jira="firefox https://team-1623308335956.atlassian.net/jira/software/projects/"
 alias trello="firefox trello.com"
 alias rstLearn="rustup doc --book"
+alias topdf="soffice --headless --convert-to pdf"
 
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
-
+alias tt="pdf /home/neil/Desktop/skewl/sem7/syllabus.pdf"
 #Package manager aliases
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rns"
+alias search="pacman -Ss"
 alias update="paru -Pw ; paru -Syu"
-alias updateMirrors="sudo pacman-mirrors --fasttrack && sudo pacman -Syyu"
 
 #Default aliases
 alias cp="cp -i"                          # confirm before overwriting something

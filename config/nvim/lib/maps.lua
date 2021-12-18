@@ -76,8 +76,8 @@ function VimFugitive()
 end
 
 function Telescope()
-	noremap("n","<leader>o",":Telescope find_files<CR>")
-	noremap("n","<leader>O",":Telescope git_files<CR>")
+	noremap("n","<leader>o",":Telescope git_files<CR>")
+	noremap("n","<leader>O",":Telescope find_files<CR>")
 	noremap("n","<leader>b",":Telescope buffers<CR>")
 	noremap("n","<leader>t",":Telescope treesitter<CR>")
 	noremap("n","<leader>s",":Telescope live_grep<CR>")
@@ -112,7 +112,10 @@ function Window()
 	noremap("n","<leader>w>",":vertical:resize +5<CR>")
 end
 
-
+function Buffers()
+	noremap("n","bn",":bn<CR>")
+	noremap("n","bp",":bp<CR>")
+end
 function TerimnalToggle()
 	noremap("n",",t",":call TerminalToggle()<cr>")
 	noremap("t",",t","<C-\\><C-n>:call TerminalToggle()<cr>")
@@ -126,8 +129,9 @@ function Completion()
 	noremap("i","<C-f>","<C-x><C-f>")
 end
 
--- -- function ()
--- -- end
+function Maximizer()
+	noremap("n","<leader>m",":MaximizerToggle<CR>")
+end
 
 -- -- function ()
 -- -- end
@@ -135,7 +139,10 @@ end
 -- -- function ()
 -- -- end
 
-local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop}
+-- -- function ()
+-- -- end
+
+local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer}
  for _,fn in pairs(mappers) do
  	fn()
  end

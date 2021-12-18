@@ -1,7 +1,7 @@
 HISTSIZE=-1
 HISTFILESIZE=-1
 #Set Custom prompt
-PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w \[\033[33m\] \$(git symbolic-ref --short HEAD 2>/dev/null)\[\033[00m\]\$ "
+PS1="\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w \[\033[33m\] \$(git symbolic-ref --short HEAD 2>/dev/null)\[\033[00m\]\n\$ "
 xset -b
 
 xhost +local:root > /dev/null 2>&1
@@ -21,3 +21,8 @@ source $XDG_CONFIG_HOME/bash/functions
 complete -f -X '!*.@(pdf)' pdf
 source "/home/neil/.local/share/cargo/env"
 # [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+
+export MYVIMRC="/home/neil/.config/nvim/init.vim"
+export REVIEW_BASE="master"
+alias luamake=/home/neil/.local/share/projects/lua-language-server/3rd/luamake/luamake

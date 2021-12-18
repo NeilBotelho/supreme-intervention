@@ -1,12 +1,59 @@
 #!/bin/sh
 # Functions 
+sk(){
+	defaultBase="/home/neil/Desktop/skewl/sem7"
+	validFolders="bda\ncc\ndm\nip\nwebtech\nwt"
+	
+	inpt="$1"
+	# accept wt in place of webtech
+	[ "$1" = "wt" ] && inpt="webtech"
 
+	#Check for valid folder name
+	validFolder=$(printf "$validFolders" | grep -w "$inpt")
+
+	if [ -n "$validFolder" ];then
+		cd $defaultBase"/$inpt"
+	else
+		echo "Invalid folder $inpt"
+		return
+	fi
+
+	if [ "$2" = "pracs" ];then 
+		cd pracs
+	fi
+	ls
+
+}
 blocks(){
 	pkill dwmblocks
 	dwmblocks &
 	disown
 }
 
+getcell(){
+# Mount/Unmount mediaserver to $dir
+	dir="/home/neil/Downloads/cell/"
+	if [ -n "$1" ];then
+		if [ -d $dir"/DCIM" ];then
+			pushd ~
+			fusermount -u $dir
+			if [ 0 -eq $? ];then
+				echo "Unmounted cell"
+			fi
+		else 
+			echo "Cell not mounted"
+		fi
+	elif [ -d "$dir/DCIM" ];then
+		echo "Cell already mounted"
+		cd $dir
+	else
+		simple-mtpfs --device 1 /home/neil/Downloads/cell
+		if [ 0 -eq $? ];then
+			echo "Mounted cell to $dir"
+		fi
+		cd $dir
+	fi
+}
 getmedia(){
 # Mount/Unmount mediaserver to $dir
 	remotePt="/usr/lib/plexmediaserver/media"
@@ -87,9 +134,9 @@ cdb(){
 shortPS(){
 	isShort=$(echo "$PS1" |grep "w")
 	if [ -z "$isShort" ];then
-		PS1=$(echo "$PS1" | sed "s/W/w/")
+		PS1=$(echo "$PS1" | sed "s/\$PWD/\\\w/")
 	else
-		PS1=$(echo "$PS1" | sed "s/w/W/")
+		PS1=$(echo "$PS1" | sed "s/\\\w/\$PWD/")
 	fi
 }
 
@@ -127,12 +174,17 @@ graphics(){
 		docker commit $tag graphics
 	fi
 }
-tt(){
-	sxiv ~/Desktop/skewl/sem6/TimeTable.jpg &
+orange(){
+	source /home/neil/Desktop/skewl/sem7/dm/pracs/venv/bin/activate
+	orange-canvas &
 	disown
 }
 
-
+netb(){
+	wmname LG3D
+	netbeans &
+	disown
+}
 #Edit shortcuts
 
 bashrc(){
@@ -222,6 +274,10 @@ if [ -z "$1" ]; then
 fi
 }
 
+
+
+
+
 cond(){
 	if [ -n "$1" ];then 
 			[ -d ~/.conda ] && mv ~/.conda ~/.config/.conda && conda deactivate
@@ -262,3 +318,11 @@ vscode(){
 	 fi
 }
 
+
+
+# ROMS
+yoshi(){
+	visualboyadvance-m /home/neil/Desktop/ROMS/yoshi/Super\ Mario\ Advance\ 3\ -\ Yoshi\'s\ Island\ \(USA\).gba &
+	disown
+
+}

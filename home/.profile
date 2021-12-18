@@ -57,9 +57,11 @@ export LESSHISTFILE=-
 export HISTSIZE="100000"
 #Add to Path
 export PATH=$PATH:/home/neil/.local/bin
-export PATH=$PATH:/home/neil/.config/bin
+export PATH=/home/neil/.config/bin:$PATH
 export PATH=$PATH:/home/neil/.local/share/cargo/bin
+export PATH=$PATH:/usr/lib/jvm/java-11-openjdk/bin
 export PATH=$PATH:$GOBIN
+export PATH=$PATH:/home/neil/.local/share/npm/lib/node_modules/vscode-langservers-extracted/bin/
 export LANG="en_IN.utf8"
 #If xsession not running start it
 if [ -z "$DISPLAY" ]&& [ "${XDG_VTNR}" -eq 1 ]; then

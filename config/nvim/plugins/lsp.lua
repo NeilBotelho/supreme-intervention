@@ -2,9 +2,7 @@
 vim.cmd([[
 set completeopt=menuone,noinsert,noselect
 let g:completion_matching_strategy_list=['exact', 'substring', 'fuzzy']
-
-" Use completion-nvim in every buffer
-autocmd BufEnter * lua require'completion'.on_attach()
+set lazyredraw
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -19,6 +17,36 @@ set shortmess+=c
 local treesitter_cache_dir=vim.g.cache_dir
 local nvim_lsp = require('lspconfig')
 ---}}}
+-- nvim-cmp {{{
+
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+   mapping = {
+		  ['<Tab>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+  		['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lua' },
+      { name = 'buffer' },
+      { name = 'path' },
+      { name = 'luasnip' },
+    },
+		snippet = {
+      expand = function(args)
+        require'luasnip'.lsp_expand(args.body)
+      end
+    },
+
+  })
+-- }}}
 -- General attach with lsp maps {{{
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -51,17 +79,17 @@ local general_attach = function(client, bufnr)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-
 end
 --}}}
 -- General Server Setup {{{
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "rust_analyzer" ,"tsserver", "gopls","bashls","yamlls","texlab","cmake"}
+local servers = {"jedi_language_server", "rust_analyzer" ,"tsserver", "gopls","bashls","yamlls","texlab","cmake","html"}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
 		on_attach=general_attach,--require'completion'.on_attach,
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 		cache={
 			directory=treesitter_cache_dir..lsp
 		},
@@ -73,8 +101,9 @@ end
 -- }}}
 -- ccls Server Setup {{{
 nvim_lsp['ccls'].setup {
-		-- on_attach=require'completion'.on_attach,
 		cmd={"ccls","--init",'{"cache": {"directory": "'..treesitter_cache_dir..'ccls-cache"}}'},
+		    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+
 		on_attach=general_attach,
 		flags = {
 			debounce_text_changes = 500,
@@ -102,6 +131,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 require'lspconfig'.sumneko_lua.setup {
+			capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua" ,"--logpath="..treesitter_cache_dir.."lua-lang-server/log"};
 	cache={
 		directory=treesitter_cache_dir..'lua-lang-server'
@@ -129,3 +159,15 @@ require'lspconfig'.sumneko_lua.setup {
     },
   },
 }
+--}}}
+-- Ale {{{
+vim.cmd([[
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\   'html': ['prettier'],
+\}
+let g:ale_linters_explicit = 1 
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
+]])
+-- }}}

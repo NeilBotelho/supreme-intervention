@@ -101,6 +101,7 @@ getPlaylists(){
 describePlaylist(){
 	local playlist=$1
 	entries=$(getPlaylists|grep "$playlist"|head -1)
+	echo "$entries"
 	if [ -z "$entries" ];then 
 		echo "No such playlist $playlist"
 	else 
@@ -116,7 +117,7 @@ describePlaylist(){
 searchTracks(){
 	selectedTrack=$(find $MUSIC_DIR -mindepth 2 -name "*"|rev|cut -d/ -f1-2|rev|grep -v "playlists"| fzf )
 	if [ -n "$selectedTrack" ];then
-		play "$MUSIC_DIR$selectedTrack"
+		play -m "$MUSIC_DIR$selectedTrack"
 	else 
 		echo "No track selected"
 	fi
