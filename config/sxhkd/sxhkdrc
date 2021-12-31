@@ -32,7 +32,8 @@ super + s
 	toggleScreenKey
 
 #screenshot 
-control+Print
+Print
+	sc
 	 
 
 # screen turning
