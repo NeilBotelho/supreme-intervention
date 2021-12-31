@@ -3,6 +3,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{array}
 \usepackage[labelformat=empty]{caption}
 \usepackage{amsmath}
 \usepackage{listings}
