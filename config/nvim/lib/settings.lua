@@ -4,6 +4,7 @@ vim.opt.directory=vim.g.cache_dir.."swp"
 -- Folding
 
 vim.cmd([[
+
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 augroup folding
@@ -29,10 +30,11 @@ vim.opt.cursorline=true
 
 
 
--- Syntax settings
+-- Syntax settings and no wrap
 vim.cmd([[
 syntax on
 syntax enable
+set nowrapscan
 set shortmess="<Enter>"
 set softtabstop=0 noexpandtab
 set nrformats+=alpha

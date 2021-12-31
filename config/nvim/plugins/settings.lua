@@ -46,7 +46,7 @@ vim.g.netrw_liststyle=3
 vim.g.netrw_browse_split=4
 vim.g.netrw_usetab=1
 --Disable netrw
--- vim.g.loaded_netrw       = 0 --Comment out for gx support 
--- vim.g.loaded_netrwPlugin = 0
+vim.g.loaded_netrw       = 0 --Comment out for gx support
+vim.g.loaded_netrwPlugin = 0
 
 

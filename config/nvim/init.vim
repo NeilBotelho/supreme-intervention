@@ -20,11 +20,11 @@ Plug 'justinmk/vim-syntax-extra'
 Plug 'godlygeek/tabular'
 Plug 'jdhao/better-escape.vim'
 Plug 'szw/vim-maximizer'
-" Trial{{{
-Plug 'numToStr/Comment.nvim'
-Plug 'phaazon/hop.nvim'
-" Plug 'puremourning/vimspector'
 Plug 'dense-analysis/ale'
+Plug 'numToStr/Comment.nvim'
+" Trial{{{
+Plug 'vimsence/vimsence'
+Plug 'sbdchd/neoformat'
 " }}}
 "Telescope{{{
 Plug 'nvim-lua/popup.nvim'

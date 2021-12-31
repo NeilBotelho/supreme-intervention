@@ -37,13 +37,13 @@ local nvim_lsp = require('lspconfig')
       { name = 'nvim_lua' },
       { name = 'buffer' },
       { name = 'path' },
-      { name = 'luasnip' },
+      -- { name = 'luasnip' },
     },
-		snippet = {
-      expand = function(args)
-        require'luasnip'.lsp_expand(args.body)
-      end
-    },
+		-- snippet = {
+  --     expand = function(args)
+  --       require'luasnip'.lsp_expand(args.body)
+  --     end
+  --   },
 
   })
 -- }}}
