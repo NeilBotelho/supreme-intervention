@@ -42,7 +42,7 @@ other(){
 }
 main(){
     syncHome
-    syncConfigs
+    # syncConfigs
 	syncShare
 	other
 }

@@ -22,7 +22,6 @@ complete -f -X '!*.@(pdf)' pdf
 source "/home/neil/.local/share/cargo/env"
 # [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
-
 export MYVIMRC="/home/neil/.config/nvim/init.vim"
 export REVIEW_BASE="master"
 alias luamake=/home/neil/.local/share/projects/lua-language-server/3rd/luamake/luamake

@@ -30,7 +30,7 @@ export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 export KERAS_HOME="$XDG_CONFIG_HOME/keras"
 export BAT_THEME="gruvbox-dark"
 export MUSIC_DIR="$HOME/.local/share/myMusic/"
-export MYVIMRC="/home/neil/.config/nvim/init.vim"
+export MYVIMRC="/home/neil/.config/nvim/init.lua"
 export CHIA_ROOT="/home/neil/.config/chia"
 
 #Langs/Dev
