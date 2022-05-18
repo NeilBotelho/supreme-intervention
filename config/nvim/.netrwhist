@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =0
-let g:netrw_dirhistcnt =0
-let g:netrw_dirhist_5='/home/neil/.config/nvim'
-let g:netrw_dirhist_4='/home/neil/rust/guess/src'
-let g:netrw_dirhist_3='/home/neil/Desktop/suckless/desktop-setup/progFolders/blocks'
-let g:netrw_dirhist_2='/home/neil/test'
-let g:netrw_dirhist_1='/home/neil/.config/readline'

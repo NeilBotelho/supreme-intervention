@@ -6,11 +6,10 @@ filename=$dir$(expr $lastnum + 1 )".png"
 
 screenshot(){
 	activeWindow=$(xdotool getactivewindow)
-	err=$(maim -s $filename)
-	if [ -z "$err"];then
+	maim -s $filename
+	err=$?
+	if [ $err = 0 ];then
 		notify-send "Saved to $filename"
-	else
-		notify-send "$err"
 	fi
 }
 

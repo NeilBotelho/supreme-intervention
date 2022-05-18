@@ -180,11 +180,13 @@ else
 	IFS=$(printf "\n\b")
 
 	# Get commanline args
-	Args=" "
+	Args=""
 	for i in $@;do
 	  if [ "$i" != "$1" ];then
-	    echo "$i"
-	    Args="$Args $i"
+			if [[ $string = *[![:space:]]* ]] ;then
+				echo "$i"
+				Args="$Args $i"
+			fi
 	  fi
 	done
 
@@ -204,7 +206,7 @@ else
 	    *.go)   goFile $isPath"$1" "$Args" ;;
 	    *.rs)  	cargoRun ;;
 	    # *.rs)   rustFile $isPath"$1" "$Args";;
-	    *.py)   python $isPath"$1" "$Args";;
+	    *.py)   python $isPath"$1" ;;
 	    *.js)   node $isPath"$1" "$Args";;
 	    *.lua)  lua $isPath"$1" "$Args";;
 			*.tex)  for file in $@;do

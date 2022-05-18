@@ -4,7 +4,7 @@
 alias pres="cd ~/Desktop/presentation/"
 alias ircish="cd ~/.local/share/projects/old/IRCish"
 alias skl="cd ~/Desktop/suckless/"
-alias skewl="cd ~/Desktop/skewl/sem7"
+alias skewl="cd ~/Desktop/skewl/sem8"
 alias scripts="cd ~/.local/bin"
 alias bins="cd ~/.config/bin/"
 alias binrs="cd ~/.config/bin/rst"
@@ -17,11 +17,7 @@ alias msk="cd ~/.local/share/myMusic/"
 alias todo="vim ~/.local/store/todo/todo"
 alias wrk="cd ~/projects/work"
 alias work="wrk"
-alias wt="/home/neil/Desktop/skewl/sem7/webtech/"
-alias bda="cd /home/neil/Desktop/skewl/sem7/bda/"
-alias dm="cd /home/neil/Desktop/skewl/sem7/dm/"
-alias ip="cd /home/neil/Desktop/skewl/sem7/ip/"
-alias cc="cd /home/neil/Desktop/skewl/sem7/cc/"
+alias vimrcf="cd ~/.config/nvim/"
 
 # alias wrkfl="cd ~/.local/share/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
 # alias ibmfl="cd ~/.local/share/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
@@ -46,6 +42,12 @@ alias l="ls"
 alias claer="clear"
 alias sulb="subl"
 
+#Tmux aliases
+alias tn="tmux -u  new"
+alias ta="tmux -u  attach"
+alias tl="tmux list-sessions"
+alias muxt="vim /home/neil/.config/tmux/tmux.conf"
+
 #Application Aliases
 alias p="python3"
 alias clip="xclip -sel clip"
@@ -60,15 +62,14 @@ alias ma="sshfs 192.168.0.118:/storage/emulated/0/  ~/Downloads/Android/ -p 2222
 alias cat="bat --theme 'Monokai Extended'"
 alias Cat="/usr/bin/cat"
 alias emacs="echo 'Dont do this again please'"
-alias vimt="vim /home/neil/.config/tmux/tmux.conf"
 alias jira="firefox https://team-1623308335956.atlassian.net/jira/software/projects/"
 alias trello="firefox trello.com"
 alias rstLearn="rustup doc --book"
 alias topdf="soffice --headless --convert-to pdf"
-
+alias img="sxiv"
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
-alias tt="pdf /home/neil/Desktop/skewl/sem7/syllabus.pdf"
+alias tt="pdf /home/neil/Desktop/skewl/sem8/syllabus.pdf"
 #Package manager aliases
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rns"

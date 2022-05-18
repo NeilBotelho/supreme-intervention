@@ -253,8 +253,8 @@ if [ -z "$1" ]; then
             *.bz2)       bunzip2 ./"$n"     ;;
             *.gz)        gunzip ./"$n"      ;;
             ## unrar command not available in debian
-            #*.rar)       unrar x -ad ./"$n" ;;
-            *.rar)       unrar-free -x ./"$n" ;;
+            *.rar)       unrar x -ad ./"$n" ;;
+            # *.rar)       unrar-free -x ./"$n" ;;
             *.zip)       unzip ./"$n"       ;;
             *.z)         uncompress ./"$n"  ;;
             *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)

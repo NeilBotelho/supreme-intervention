@@ -1,0 +1,9 @@
+#!/bin/sh
+
+startTerm(){
+	alacritty &
+	disown
+}
+# alacritty msg create-window >  /dev/null 2>&1
+# [ $? = 0 ] || startTerm
+startTerm

@@ -1,73 +1,77 @@
-local getMapSet=function (mode)
-	local mapDict=vim.api.nvim_get_keymap(mode)
-	local existentDict={}
-	for _,mapDesc in pairs(mapDict) do
-		existentDict[mapDesc["lhs"]]=true	
-	end
-	return existentDict
+local LEGACY=false
+if vim.keymap~=nil then
+	LEGACY=true
 end
 
-
-local deduplicator={}
-local noremap=function (mode,lhs,rhs)
-	if(deduplicator[lhs.."MODE"..mode] == true)
-		then
-		print("WARNING duplicate map: "..lhs,rhs)
+local noremap=function (mode,lhs,rhs,silent)
+	if silent==nil then
+		silent=true
+	end
+	--COMPATIBILITY
+	if LEGACY then
+	    vim.api.nvim_set_keymap(mode,lhs,rhs,{})
 	else
-		deduplicator[lhs.."MODE"..mode]=true
-	end
-	vim.api.nvim_set_keymap(mode,lhs,rhs,{noremap=true})
+	   vim.keymap.set(mode, lhs,rhs,{noremap=true, silent=silent})
+ 	end
 end
+
+
+MYVIMRC="/home/neil/.config/nvim/init.lua"
 
 vim.g.mapleader=" "
-
-
 -- General
-function General()
+local function General()
+	local nosilent=false
 	noremap("n","tn",":set invnumber<CR>")
 	noremap("n","tb",":SignatureToggleSigns<CR>")
 	noremap("n","tr",":RelativizeToggle<CR>")
-	noremap("n","So",":w<CR>:source $MYVIMRC<CR>")
-	noremap("n","Sp",":w<CR>:source $MYVIMRC<CR>:PlugInstall<CR>")
+	noremap("n","Ss",":w<CR>:source %<CR>",nosilent)
+	noremap("n","So",":w<CR>:source "..MYVIMRC.."<CR>",nosilent)
+	noremap("n","<leader>ev",":edit "..MYVIMRC.."<CR>")
 	noremap("n","Sm",":setlocal foldmethod=marker<CR>")
-	noremap("n","Pi","So:PlugInstall<CR>")
-	noremap("n","<leader>c",":Telescope colorscheme<CR>")
 	noremap("n","<Esc>","<Esc><Esc>")
-	noremap("n","<leader>ev",":edit $MYVIMRC<CR>")
-	noremap("n","<leader>w",":w<CR>")
+	noremap("n","<leader>w",":w<CR>",nosilent)
 	noremap("n","<leader>Q",":q!<CR>")
 	noremap("n","<leader>q",":q<CR>")
 	noremap("n","<leader>H",":noh<CR>")
-	noremap("n","<leader>R",":%s/")
+	noremap("v","<leader>R",":s/",nosilent) -- last arguement indicates not silent
+	noremap("n","<leader>R",":%s/",nosilent)
 	noremap("n","Q","<Nop> ") --Disable Ex mode
 end
-function InsertMode()
+
+local function PackerMaps()
+	local nosilent=false
+	noremap("n","Sp",":PackerInstall<CR>",nosilent)
+	noremap("n","Sc",":PackerClean<CR>",nosilent)
+	noremap("n","Su",":PackerUpdate<CR>",nosilent)
+
+end
+local function InsertMode()
 	noremap("i","jj","<Esc>")
-	noremap("i","<C-h>","<Esc>hi")
-	noremap("i","<C-j>","<Esc>ji")
-	noremap("i","<C-l>","<Esc>la")
+	-- noremap("i","<C-h>","<Esc>hi")
+	-- noremap("i","<C-j>","<Esc>ji")
 end
 
-function VisualMode()
-	noremap("v","J",":m '>+1<CR>gv=gv")
+local function VisualMode()
 	noremap("v","K",":m '<-2<CR>gv=gv")
+	noremap("v","J",":m '>+1<CR>gv=gv")
 
 end
 
-function Searching()
+local function Searching()
 	noremap("n","n","nzzzv")
 	noremap("n","N","Nzzzv")
 end
 
-function TabNavigation()
-	noremap("n","<C-k>","<C-PageUp>")
-	noremap("n","<C-j>","<C-PageDown>")
+local function TabNavigation()
+	-- noremap("n","<C-k>","<C-PageUp>")
+	-- noremap("n","<C-j>","<C-PageDown>")
 	noremap("n","<C-Tab>",":tabn<CR>")
 	noremap("n","<leader>wt","<C-w>T")
 end
 
 
-function VimFugitive()
+local function VimFugitive()
 	noremap("n","<leader>gs",":G<CR><C-w>o")
 	noremap("n","<leader>gf",":diffget //2<CR>")
 	noremap("n","<leader>gc",":G commit<CR>")
@@ -75,23 +79,25 @@ function VimFugitive()
 
 end
 
-function Telescope()
+local function Telescope()
 	noremap("n","<leader>o",":Telescope find_files<CR>")
 	noremap("n","<leader>O",":Telescope git_files<CR>")
 	noremap("n","<leader>b",":Telescope buffers<CR>")
 	noremap("n","<leader>t",":Telescope treesitter<CR>")
 	noremap("n","<leader>s",":Telescope live_grep<CR>")
 	noremap("n","<leader>f",":Telescope grep_string<CR>")
+	noremap("n","<leader>th",":Telescope help_tags<CR>")
+	noremap("n","<leader>c",":Telescope colorscheme<CR>")
 end
-function Hop()
+local function Hop()
 	noremap("n",",j",":HopWord<CR>")
 	noremap("n",",l",":HopLine<CR>")
 end
-function Mundo()
+local function Mundo()
 	noremap("n","tz",":MundoToggle<CR>")
 end
 
-function AnyJump()
+local function AnyJump()
 	noremap("v","<leader>u",":AnyJumpVisual<CR>")
 	-- Anyjump with word under cursor
 	noremap("n","<leader>u",":AnyJump<CR>")
@@ -99,7 +105,7 @@ function AnyJump()
 	noremap("n","<leader>al",":AnyJumpLastResults<CR>")
 end
 
-function Window()
+local function Window()
 	noremap("n","<leader>v","<C-w>v")
 	noremap("n","<leader>wo","<C-w>o<CR>")
 	noremap("n","<leader>h",":wincmd h<CR>")
@@ -112,49 +118,58 @@ function Window()
 	noremap("n","<leader>w>",":vertical:resize +5<CR>")
 end
 
-function Buffers()
+local function Buffers()
 	noremap("n","bn",":bn<CR>")
 	noremap("n","bp",":bp<CR>")
 	noremap("n",",s",":split new<CR>:setlocal buftype=nofile<CR>:file scratch<CR>")
 	noremap("n",",S",":vsplit new<CR>:setlocal buftype=nofile<CR>:file scratch<CR>") --scratch buffer
 end
-function TerimnalToggle()
+local function TerimnalToggle()
 	noremap("n",",t",":call TerminalToggle()<cr>")
 	noremap("t",",t","<C-\\><C-n>:call TerminalToggle()<cr>")
 end
 
-function PresentationMode()
+local function PresentationMode()
 	noremap("n","<leader>P",":call PresentMode()<CR>")
 end
 
-function Completion()
+local function Completion()
 	noremap("i","<C-f>","<C-x><C-f>")
 end
 
-function Maximizer()
+local function Maximizer()
 	noremap("n","<leader>m",":MaximizerToggle<CR>")
 end
 
-function Resizers()
+local function Resizers()
 	noremap("n",",<","15<C-w><")
 	noremap("n",",>","15<C-w>>")
 	noremap("n",",-","5<C-w>-")
 	noremap("n",",=","5<C-w>+")
 end
 
+local function _NvimTree()
+	--COMPATIBILITY
+	if LEGACY then
+		noremap("n","<leader>T",":NvimTreeToggle<CR>")
+		noremap("n","<leader>n","NvimTreeFindFile<CR>")
+	else
+		local nvimtree=require"nvim-tree"
+		noremap("n","<leader>T",nvimtree.toggle)
+		noremap("n","<leader>n",nvimtree.find_file)
+	end
+end
+local function Colorizer()
+	if LEGACY then
+		noremap("n","tc",":Colorizer<CR>")
+	else
+		local colorizer=require"colorizer"
+		noremap("n","tc",colorizer.attach_to_buffer)
+	end
+end
 
+local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,_NvimTree,Colorizer,PackerMaps}
 
--- -- function ()
--- -- end
-
--- -- function ()
--- -- end
-
--- -- function ()
--- -- end
-
-local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers}
- for _,fn in pairs(mappers) do
- 	fn()
+ for _ , MapFn in pairs(mappers) do
+ 	MapFn()
  end
-

@@ -7,5 +7,5 @@ if [ -n "$1" ]  ;then
 	[ -d "$1" ] && cd $folder
 	echo $folder
 fi
-rm *.log *.fls *.toc *.out *.synctex.gz *.fdb_latexmk *.aux *.dvi *.synctex\(busy\) *.bbl *.bcf  *.run.xml *.blg 2> /dev/null
+rm *.log *.fls *.toc *.out *.synctex.gz *.fdb_latexmk *.aux *.dvi *.synctex\(busy\) *.bbl *.bcf  *.run.xml *.blg *.lof *.lot 2> /dev/null 
 
