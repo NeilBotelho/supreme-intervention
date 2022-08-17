@@ -35,7 +35,7 @@ if [ -z "$ssid" ];then
 else
     echo "$ssid  "
 fi
-if [ -d /sys/class/net/enp1s0/operstate ] 
-then 
+if [ -d /sys/class/net/enp1s0/operstate ]
+then
     sed " s/down//;s/up// " /sys/class/net/e*/operstate
 fi

@@ -30,6 +30,7 @@ else
 
 	local runCommands={
 		sh = {{"<leader>r",":w<CR>:exec 'silent !alacritty -e buildSystem ' shellescape(@%, 1) '&'<CR>"}},
+		javascript = {{"<leader>r",":w<CR>:exec 'silent !alacritty -e buildSystem ' shellescape(@%, 1) '&'<CR>"}},
 		python = {
 		{"<leader>r",":w<CR>:exec 'silent !alacritty -e buildSystem ' shellescape(@%, 1) '&'<CR>"},
 		{"<leader>c",":%s/pdb\\..*()$//g<CR>"},
@@ -49,7 +50,7 @@ else
 
 	local runners=vim.api.nvim_create_augroup("runners",{clear=true})
 	create_autocmd("FileType", {
-		pattern ={"sh","python","c","cpp","rust","tex","html"},
+		pattern ={"sh","python","c","cpp","rust","tex","html","javascript"},
 		callback=function()
 			local matchedType=vim.fn.expand("<amatch>")
 			local cmds=runCommands[matchedType]

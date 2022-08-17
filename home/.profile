@@ -10,7 +10,6 @@ export WALLPAPER=/home/neil/.config/wallpapers/collections
 export TERMINAL="alacritty"
 export TERM="alacritty"
 export EDITOR=/usr/bin/vim
-export LC_ALL="en_IN.utf8"
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export DISK1MONITOR="$XDG_DATA_HOME/ssd_monitor/1"
 export DISK2MONITOR="$XDG_DATA_HOME/ssd_monitor/2"
@@ -62,7 +61,6 @@ export PATH=$PATH:/home/neil/.local/share/cargo/bin
 export PATH=$PATH:/usr/lib/jvm/java-11-openjdk/bin
 export PATH=$PATH:$GOBIN
 export PATH=$PATH:/home/neil/.local/share/npm/lib/node_modules/vscode-langservers-extracted/bin/
-export LANG="en_IN.utf8"
 #If xsession not running start it
 if [ -z "$DISPLAY" ]&& [ "${XDG_VTNR}" -eq 1 ]; then
     startx $XDG_CONFIG_HOME/X11/xinitrc

@@ -1,18 +1,9 @@
-local LEGACY=false
-if vim.keymap~=nil then
-	LEGACY=true
-end
 
 local noremap=function (mode,lhs,rhs,silent)
 	if silent==nil then
 		silent=true
 	end
-	--COMPATIBILITY
-	if LEGACY then
-	    vim.api.nvim_set_keymap(mode,lhs,rhs,{})
-	else
 	   vim.keymap.set(mode, lhs,rhs,{noremap=true, silent=silent})
- 	end
 end
 
 
@@ -37,6 +28,9 @@ local function General()
 	noremap("v","<leader>R",":s/",nosilent) -- last arguement indicates not silent
 	noremap("n","<leader>R",":%s/",nosilent)
 	noremap("n","Q","<Nop> ") --Disable Ex mode
+	noremap("n","ss",":set spell<CR>") --Disable Ex mode
+	noremap("n","ns",":set nospell<CR>") --Disable Ex mode
+
 end
 
 local function PackerMaps()
@@ -148,28 +142,28 @@ local function Resizers()
 	noremap("n",",=","5<C-w>+")
 end
 
-local function _NvimTree()
+-- local function _NvimTree()
 	--COMPATIBILITY
-	if LEGACY then
-		noremap("n","<leader>T",":NvimTreeToggle<CR>")
-		noremap("n","<leader>n","NvimTreeFindFile<CR>")
-	else
-		local nvimtree=require"nvim-tree"
-		noremap("n","<leader>T",nvimtree.toggle)
-		noremap("n","<leader>n",nvimtree.find_file)
-	end
-end
-local function Colorizer()
-	if LEGACY then
-		noremap("n","tc",":Colorizer<CR>")
-	else
-		local colorizer=require"colorizer"
-		noremap("n","tc",colorizer.attach_to_buffer)
-	end
-end
+	-- if LEGACY then
+		-- noremap("n","<leader>T",":NvimTreeToggle<CR>")
+		-- noremap("n","<leader>n","NvimTreeFindFile<CR>")
+	-- else
+		-- local nvimtree=require"nvim-tree"
+		-- noremap("n","<leader>T",nvimtree.toggle)
+		-- noremap("n","<leader>n",nvimtree.find_file)
+	-- end
+-- end
+-- local function Colorizer()
+-- 	if LEGACY then
+-- 		noremap("n","tc",":Colorizer<CR>")
+-- 	else
+-- 		local colorizer=require"colorizer"
+-- 		noremap("n","tc",colorizer.attach_to_buffer)
+-- 	end
+-- end
 
-local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,_NvimTree,Colorizer,PackerMaps}
-
+local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,PackerMaps}
+local dont={_NvimTree,Colorizer}
  for _ , MapFn in pairs(mappers) do
  	MapFn()
  end

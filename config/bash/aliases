@@ -18,6 +18,7 @@ alias todo="vim ~/.local/store/todo/todo"
 alias wrk="cd ~/projects/work"
 alias work="wrk"
 alias vimrcf="cd ~/.config/nvim/"
+alias moz="cd /tmp/mozilla"
 
 # alias wrkfl="cd ~/.local/share/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
 # alias ibmfl="cd ~/.local/share/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
@@ -67,6 +68,9 @@ alias trello="firefox trello.com"
 alias rstLearn="rustup doc --book"
 alias topdf="soffice --headless --convert-to pdf"
 alias img="sxiv"
+alias tron="ssh sshtron.zachlatta.com"
+
+
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
 alias tt="pdf /home/neil/Desktop/skewl/sem8/syllabus.pdf"

@@ -5,14 +5,15 @@ require'nvim-tree'.setup {
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {'startify', 'dashboard'},
-  auto_close          = false,
   open_on_tab         = true,
   hijack_cursor       = false,
   update_cwd          = false,
-  update_to_buf_dir   = {
-    enable = true,
-    auto_open = true,
-  },
+		actions ={
+		open_file = {
+			resize_window = false,
+		}
+	},
+
   diagnostics = {
     enable = false,
     icons = {
@@ -45,7 +46,7 @@ require'nvim-tree'.setup {
     height = 30,
     hide_root_folder = false,
     side = 'left',
-    auto_resize = false,
+    -- auto_resize = false,
     mappings = {
       custom_only = false,
       list = {}

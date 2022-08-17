@@ -309,14 +309,14 @@ texmanager(){
 	 fi
 }
 
-vscode(){
-	 
-	 if [ -n "$1" ];then 
-			[ -d ~/.vscode ] && mv ~/.vscode ~/.config/vscode && mv ~/.vscode-oss/ ~/.config/vscode-oss
-	 else
-			[ -d ~/.config/vscode ] && mv ~/.config/vscode ~/.vscode && mv ~/.config/vscode-oss ~/.vscode-oss
-	 fi
-}
+# vscode(){
+# 	 
+# 	 if [ -n "$1" ];then 
+# 			[ -d ~/.vscode ] && mv ~/.vscode ~/.config/vscode && mv ~/.vscode-oss/ ~/.config/vscode-oss
+# 	 else
+# 			[ -d ~/.config/vscode ] && mv ~/.config/vscode ~/.vscode && mv ~/.config/vscode-oss ~/.vscode-oss
+# 	 fi
+# }
 
 
 

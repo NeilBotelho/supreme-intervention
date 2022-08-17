@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 value=$(cat /sys/class/backlight/amdgpu_bl0/brightness)
 increment=10
 setbrightness(){
