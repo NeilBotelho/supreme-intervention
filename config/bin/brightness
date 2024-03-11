@@ -1,5 +1,5 @@
 #!/bin/sh
-currBright=$(cat  /sys/class/backlight/amdgpu_bl0/brightness|tr -d "\n")
+currBright=$(cat  /sys/class/backlight/amdgpu_bl1/brightness|tr -d "\n")
 
 currBright=$(echo "scale=0;100*$currBright/255"|bc -l)
 echo " $currBright%  "

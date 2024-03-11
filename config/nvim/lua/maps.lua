@@ -18,7 +18,6 @@ local function General()
 	noremap("n","tr",":RelativizeToggle<CR>")
 	noremap("n","Ss",":w<CR>:source %<CR>",nosilent)
 	noremap("n","So",":w<CR>:source "..MYVIMRC.."<CR>",nosilent)
-	noremap("n","<leader>ev",":edit "..MYVIMRC.."<CR>")
 	noremap("n","Sm",":setlocal foldmethod=marker<CR>")
 	noremap("n","<Esc>","<Esc><Esc>")
 	noremap("n","<leader>w",":w<CR>",nosilent)
@@ -30,14 +29,13 @@ local function General()
 	noremap("n","Q","<Nop> ") --Disable Ex mode
 	noremap("n","ss",":set spell<CR>") --Disable Ex mode
 	noremap("n","ns",":set nospell<CR>") --Disable Ex mode
-
+	noremap("n","<leader>fn",":echo expand('%')<CR>")
 end
 
-local function PackerMaps()
+local function LazyMaps()
 	local nosilent=false
-	noremap("n","Sp",":PackerInstall<CR>",nosilent)
-	noremap("n","Sc",":PackerClean<CR>",nosilent)
-	noremap("n","Su",":PackerUpdate<CR>",nosilent)
+	noremap("n","Sp",":Lazy install<CR>",nosilent)
+	noremap("n","Su",":Lazy update<CR>",nosilent)
 
 end
 local function InsertMode()
@@ -61,7 +59,7 @@ local function TabNavigation()
 	-- noremap("n","<C-k>","<C-PageUp>")
 	-- noremap("n","<C-j>","<C-PageDown>")
 	noremap("n","<C-Tab>",":tabn<CR>")
-	noremap("n","<leader>wt","<C-w>T")
+	-- noremap("n","<leader>wt","<C-w>T")
 end
 
 
@@ -72,17 +70,24 @@ local function VimFugitive()
 	noremap("n","<leader>gj",":diffget //3<CR>")
 
 end
-
 local function Telescope()
-	noremap("n","<leader>o",":Telescope find_files<CR>")
-	noremap("n","<leader>O",":Telescope git_files<CR>")
+	local telescope=require('telescope.builtin')
 	noremap("n","<leader>b",":Telescope buffers<CR>")
-	noremap("n","<leader>t",":Telescope treesitter<CR>")
-	noremap("n","<leader>s",":Telescope live_grep<CR>")
-	noremap("n","<leader>f",":Telescope grep_string<CR>")
-	noremap("n","<leader>th",":Telescope help_tags<CR>")
 	noremap("n","<leader>c",":Telescope colorscheme<CR>")
+	noremap("n","<leader>ff",":Telescope find_files<CR>")
+	-- noremap("n","<leader>o",":Telescope find_files<CR>")
+	noremap("n","<leader>gF",":Telescope git_files<CR>")
+	noremap("n","<leader>F",":Telescope live_grep<CR>")
+	noremap("n","<leader>ts",":Telescope treesitter<CR>")
+	noremap('n', '<leader>u', function ()telescope.lsp_references({fname_width=3,show_line=false,trim_text=true}) end)
+	noremap('n', 'gd', telescope.lsp_definitions)
+	noremap('n', 'gi', telescope.lsp_implementations)
+	noremap('n', '<leader>ds', telescope.lsp_document_symbols)
+	noremap('n', '<leader>ws', telescope.lsp_workspace_symbols)
+	noremap('n', 'gt', telescope.lsp_type_definitions)
+	noremap('n',"<leader>ow", ":Telescope workspaces<CR>")
 end
+
 local function Hop()
 	noremap("n",",j",":HopWord<CR>")
 	noremap("n",",l",":HopLine<CR>")
@@ -142,28 +147,23 @@ local function Resizers()
 	noremap("n",",=","5<C-w>+")
 end
 
--- local function _NvimTree()
-	--COMPATIBILITY
-	-- if LEGACY then
-		-- noremap("n","<leader>T",":NvimTreeToggle<CR>")
-		-- noremap("n","<leader>n","NvimTreeFindFile<CR>")
-	-- else
-		-- local nvimtree=require"nvim-tree"
-		-- noremap("n","<leader>T",nvimtree.toggle)
-		-- noremap("n","<leader>n",nvimtree.find_file)
-	-- end
--- end
--- local function Colorizer()
--- 	if LEGACY then
--- 		noremap("n","tc",":Colorizer<CR>")
--- 	else
--- 		local colorizer=require"colorizer"
--- 		noremap("n","tc",colorizer.attach_to_buffer)
--- 	end
--- end
+local function _NvimTree()
+	local nvimtree=require"nvim-tree"
+	noremap("n","<leader>T",":NvimTreeToggle<CR>")
+end
+local function _Trouble()
+		noremap("n","<leader>dw",":TroubleToggle workspace_diagnostics<CR>")
+		noremap("n","<leader>dq",":TroubleToggle quickfix<CR>")
+		noremap("n","<leader>td",":TodoTrouble<CR>")
+end
 
-local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,AnyJump,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,PackerMaps}
-local dont={_NvimTree,Colorizer}
+local function Obsidian()
+	noremap("n","<leader>oo",":e ~/.local/share/obsidian/vaults/personal/notes/home.md<CR>")
+	noremap("n","<leader>no",":ObsidianQuickSwitch<CR>")
+	noremap("n","<leader>nn",":ObsidianNew ")
+end
+local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,LazyMaps,_NvimTree, _Trouble,Obsidian}
+
  for _ , MapFn in pairs(mappers) do
  	MapFn()
  end

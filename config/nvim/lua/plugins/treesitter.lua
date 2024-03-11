@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-	ensure_installed = {"rust", "latex", "json", "go",
+	ensure_installed = {"rust", "latex", "json", "go","python",
 											"c", "cpp", "cmake", "java", "lua", "bash",
 											"rst","toml","typescript", "html", "css",
 											"javascript"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages

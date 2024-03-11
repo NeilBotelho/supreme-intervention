@@ -101,21 +101,22 @@ javaFile(){
 }
 
 rustFile(){
-	error=$(rustc $1)
-	if [ $? -eq 0 ];then
-		compiled=$(echo "$1"|rev|cut -d"/" -f1|rev|cut -d. -f1)
-		args=" "
-		for i in $@;do
-			if [ "$i" != "$1" ];then
-				args="$args $i"
-			fi
-		done
-		./$compiled $args
-	fi
-
-	if [ -f "$compiled" ];then 
-		rm "$compiled"
-	fi
+	cargo run
+	# error=$(rustc $1)
+	# if [ $? -eq 0 ];then
+	# 	compiled=$(echo "$1"|rev|cut -d"/" -f1|rev|cut -d. -f1)
+	# 	args=" "
+	# 	for i in $@;do
+	# 		if [ "$i" != "$1" ];then
+	# 			args="$args $i"
+	# 		fi
+	# 	done
+	# 	./$compiled $args
+	# fi
+	#
+	# if [ -f "$compiled" ];then 
+	# 	rm "$compiled"
+	# fi
 }
 
 cargoRun(){

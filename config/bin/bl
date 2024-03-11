@@ -1,0 +1,32 @@
+#!/bin/bash
+value=$(cat /sys/class/backlight/amdgpu_bl0/brightness)
+increment=10
+setbrightness(){
+	echo "$value"
+	value=$1
+	if [ $value -gt 255 ]; then
+		value=255
+	fi
+	
+	if [ $value -lt 0 ]; then
+	       value=0
+	fi
+	echo "$value"
+	echo $value > /sys/class/backlight/amdgpu_bl0/brightness
+}
+
+case "$1" in
+	"+") value=$(echo "$value + $increment" | bc )
+		 setbrightness $value
+		;;	
+	"-") value=$(echo "$value - $increment" |bc )
+		 setbrightness $value
+		;;
+
+	"") echo "Brightness is currently $value out of 255"
+	    ;;
+	*) setbrightness $1
+	   echo "Brightness is currently $value out of 255"
+	;;
+esac
+pkill -RTMIN+9 dwmblocks 

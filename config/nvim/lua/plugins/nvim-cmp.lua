@@ -30,7 +30,7 @@ cmp.setup({
 	mapping = {
 		['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
 		['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-		-- ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+		-- ['<C-k>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
 		['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
 		["<Tab>"] = function(fallback)
         if_cmp_visible(cmp.select_next_item,fallback)
@@ -47,10 +47,10 @@ cmp.setup({
 
 	--Sources list
 	sources = cmp.config.sources({
-		{ name = 'luasnip' },
-		{ name = 'nvim_lsp', keyword_length=2},
+		{ name = 'nvim_lsp', keyword_length=1},
 		{ name = 'nvim_lua', keyword_length=2},
 		{ name = 'buffer', keyword_length=2, max_item_count=5 },
+		{ name = 'luasnip' },
 		{ name = 'path',},
 	}),
 

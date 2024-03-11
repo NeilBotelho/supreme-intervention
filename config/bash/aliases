@@ -19,9 +19,13 @@ alias wrk="cd ~/projects/work"
 alias work="wrk"
 alias vimrcf="cd ~/.config/nvim/"
 alias moz="cd /tmp/mozilla"
+alias sec="cd ~/.local/share/sec"
+alias oss="pr && cd oss"
+alias pipd="oss && cd pip"
+alias pipt="echo 'deactivate && rm -rf  /tmp/tst/pipcache /tmp/tst/venv /tmp/pip* && python -m venv /tmp/tst/venv && source /tmp/tst/venv/bin/activate && pip install -e . && pip install --no-cache-dir --progress-bar on streamlit --parallel-downloads 5' |clip; echo 'Clipped clean test'"
+alias lndx="pr && cd oss/llama_index && source .venv/bin/activate && cd llama_index"
+alias ch="pr && cd oss/cohere-python/cohere/"
 
-# alias wrkfl="cd ~/.local/share/projects/work/kvasir-ibmfl && cond && conda activate ibmfl"
-# alias ibmfl="cd ~/.local/share/projects/work/kvasir-ibmfl/federated-learning-lib/editedWheel/ibmfl"
 
 #Shortforms 
 alias cl="clear"
@@ -29,7 +33,7 @@ alias cd..="cd .."
 alias ..="cd .."
 alias cpr="cp -r"
 alias ex="extract"
-alias rmf="rm -r"
+alias rmf="rm -rf"
 alias sensor="watch -n 1 sensors"
 alias ports="netstat -tulanp"
 #Edit aliases
@@ -50,7 +54,10 @@ alias tl="tmux list-sessions"
 alias muxt="vim /home/neil/.config/tmux/tmux.conf"
 
 #Application Aliases
+alias gwu="git config remote.origin.fetch \"+refs/heads/*:refs/remotes/origin/*\""
+alias phone="cat ~/.local/share/projects/resumes/num |clip"
 alias p="python3"
+alias pi="pip install --break-system-packages"
 alias clip="xclip -sel clip"
 alias clipp="xclip -selection clipboard -t image/png"
 alias clipj="xclip -selection clipboard -t image/jpg"
@@ -63,17 +70,19 @@ alias ma="sshfs 192.168.0.118:/storage/emulated/0/  ~/Downloads/Android/ -p 2222
 alias cat="bat --theme 'Monokai Extended'"
 alias Cat="/usr/bin/cat"
 alias emacs="echo 'Dont do this again please'"
-alias jira="firefox https://team-1623308335956.atlassian.net/jira/software/projects/"
 alias trello="firefox trello.com"
 alias rstLearn="rustup doc --book"
 alias topdf="soffice --headless --convert-to pdf"
 alias img="sxiv"
 alias tron="ssh sshtron.zachlatta.com"
-
+alias aacc="cat ~/.local/share/sec/acc|clip"
+alias dec=deactivate
+alias man=batman
 
 # Command aliases
 alias fixFn="sudo rtcwake -m mem -s 2"
 alias tt="pdf /home/neil/Desktop/skewl/sem8/syllabus.pdf"
+alias downloadTest="deactivate && rmf /tmp/tst/venv && python -m venv /tmp/tst/venv && source /tmp/tst/venv/bin/activate && pip install -e . && rm -rf /tmp/tst/pips/* && pip install -r installTest/requirements.txt --cache-dir /tmp/tst/pips"
 #Package manager aliases
 alias install="sudo pacman -S"
 alias remove="sudo pacman -Rns"

@@ -1,3 +1,4 @@
+
 -- Initial Setup {{{
 vim.cmd([[
 set completeopt=menuone,noinsert,noselect
@@ -6,10 +7,7 @@ set lazyredraw
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>" " Set completeopt to have a better completion experience set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
@@ -17,54 +15,107 @@ set shortmess+=c
 local treesitter_cache_dir=vim.g.cache_dir
 local nvim_lsp = require('lspconfig')
 ---}}}
+-- LSP severity filtering{{{
+	local filterWarning = function(selectedSeverity)
+		if selectedSeverity == "DISABLE" then
+			vim.diagnostic.hide()
+			return
+		end
+		if (selectedSeverity) then
+			vim.diagnostic.config({
+				virtual_text = { severity = selectedSeverity },
+				signs = { severity = selectedSeverity },
+				underline = { severity = selectedSeverity },
+				severity_sort = true
+			})
+		else
+			vim.diagnostic.config({
+				virtual_text = true,
+				signs = true,
+			})
+		end
+	end
+	local function pickSeverity(opts)
+		local pickers = require "telescope.pickers"
+		local finders = require "telescope.finders"
+		local conf = require("telescope.config").values
+		local actions = require "telescope.actions"
+		local action_state = require "telescope.actions.state"
+		local severityDict = {
+			HINT = vim.diagnostic.severity.HINT,
+			INFO = vim.diagnostic.severity.INFO,
+			WARN = vim.diagnostic.severity.WARN,
+			ERROR = vim.diagnostic.severity.ERROR,
+			DISABLE = "DISABLE",
+			ALL = nil
+		}
+		-- our picker function: colors
+		opts = opts or {}
+		pickers.new(opts, {
+			prompt_title = "colors",
+			finder = finders.new_table {
+				results = {"ERROR","WARN","INFO","HINT","ALL","DISABLE"}
+			},
+			sorter = conf.generic_sorter(opts),
+			attach_mappings = function(prompt_bufnr, map)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+					local selection = action_state.get_selected_entry()
+					filterWarning(severityDict[selection[1]])
+				end)
+				return true
+			end,
+		}):find()
+	end
+
+-- }}}
 -- nvim-cmp {{{
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 --}}}
--- General lsp maps {{{
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local lsp_maps = function(_, buffnr)
-  local function buf_set_keymap(...) vim.keymap.set(...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(buffnr, ...) end
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true ,buffer=0}
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', vim.lsp.buf.declaration, opts)
-  buf_set_keymap('n', 'gd', vim.lsp.buf.definition, opts)
-  buf_set_keymap('n', 'gt', vim.lsp.buf.type_definition, opts)
-  buf_set_keymap('n', 'K', vim.lsp.buf.hover, opts)
-  buf_set_keymap('n', 'gi', vim.lsp.buf.implementation, opts)
-  buf_set_keymap('i', '<C-s>', vim.lsp.buf.signature_help, opts)
-  buf_set_keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-  buf_set_keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  buf_set_keymap('n', '<space>D', vim.lsp.buf.type_definition, opts)
-  buf_set_keymap('n', '<space>rn', vim.lsp.buf.rename, opts)
-  buf_set_keymap('n', '<space>ca', vim.lsp.buf.code_action, opts)
-  buf_set_keymap('n', 'gr', vim.lsp.buf.references, opts)
- 	buf_set_keymap('n', '<space>e', vim.lsp.diagnostic.show_line_diagnostics, opts)
- 	buf_set_keymap('n', '<space>dj', vim.lsp.diagnostic.goto_next, opts)
- 	buf_set_keymap('n', '<space>dk', vim.lsp.diagnostic.goto_prev, opts);
-  buf_set_keymap("n", "<space>f", vim.lsp.buf.formatting, opts)
-  buf_set_keymap('n', '<space>wl', function()print(vim.inspect(vim.lsp.buf.list_workspace_folders()))end, opts)
-end
-
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { noremap=true, silent=true, buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set({'n','i'}, '<C-s>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', 'fw', pickSeverity, opts)
+    vim.keymap.set('n', '<leader>W', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
 --}}}
 -- General Server Setup {{{
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = {"jedi_language_server", "rust_analyzer" ,"tsserver", "gopls","bashls","yamlls","texlab","cmake","html","clangd"}
+local servers = {"tsserver", "gopls","bashls","yamlls","texlab","neocmake","html","clangd","emmet_ls","cssls","rnix",'zls'}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-		on_attach=lsp_maps,--require'completion'.on_attach,
-    capabilities = capabilities,
 		cache={
 			directory=treesitter_cache_dir..lsp
 		},
@@ -73,41 +124,41 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+--}}}
+--Pylsp{{{
+require'lspconfig'.pylsp.setup{
+  settings = {
+    pylsp = {
+      plugins = {
+				black = {
+					enabled=true,
+				},
+				ruff = {
+					enabled = true,
+					-- select={"F","W","E","ERA","FLY","TRY","PERF","RUF","FURB"},
+					-- extendSelect = { "I" },
+				},
+      }
+    }
+  }
+}
+nvim_lsp["emmet_ls"].setup{
+	  filetypes={"html", "typescriptreact", "javascriptreact"},
+		cache={
+			directory=treesitter_cache_dir.."emmet_ls"
+		},
+    flags = {
+      debounce_text_changes = 150,
+    }
+}
 -- }}}
- -- Sumneko lua Server Setup {{{
-local system_name
-if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
-elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
-elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
-else
-  print("Unsupported system for sumneko")
-end
-
--- set the path to the sumneko installation; if you previously installed via the now deprecated :LspInstall, use
-local sumneko_root_path ='/home/neil/.config/sumneko/lua-language-server'
-local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
-
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
-require'lspconfig'.sumneko_lua.setup {
-	on_attach=lsp_maps,--require'completion'.on_attach,
-	capabilities = capabilities,
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua" ,"--logpath="..treesitter_cache_dir.."lua-lang-server/log"};
-	cache={
-		directory=treesitter_cache_dir..'lua-lang-server'
-	},
+ -- lua-ls Setup {{{
+ require'lspconfig'.lua_ls.setup {
   settings = {
     Lua = {
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = 'LuaJIT',
-        -- Setup your lua path
-        path = runtime_path,
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
@@ -116,6 +167,7 @@ require'lspconfig'.sumneko_lua.setup {
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -141,7 +193,6 @@ let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
 -- 		cmd={"ccls","--init",'{"cache": {"directory": "'..treesitter_cache_dir..'ccls-cache"}}'},
 -- 		    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 --
--- 		on_attach=general_attach,
 -- 		flags = {
 -- 			debounce_text_changes = 500,
 -- 		}

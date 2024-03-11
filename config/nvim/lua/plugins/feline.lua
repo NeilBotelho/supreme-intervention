@@ -1,5 +1,5 @@
 -- require('feline').setup()
-vim.opt.termguicolors=true
+-- vim.opt.termguicolors=true
 if not pcall(require, "feline") then
   return
 end
