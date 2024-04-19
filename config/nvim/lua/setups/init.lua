@@ -1,5 +1,9 @@
 return {
 	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
+	{
 		'mrcjkb/rustaceanvim',
 		version = '^4', -- Recommended
 		ft = { 'rust' },

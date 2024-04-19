@@ -112,7 +112,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- General Server Setup {{{
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = {"tsserver", "gopls","bashls","yamlls","texlab","neocmake","html","clangd","emmet_ls","cssls","rnix",'zls'}
+local servers = {"tsserver", "gopls","bashls","yamlls","texlab","neocmake","html","clangd","emmet_ls","cssls","rnix","zls"}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {

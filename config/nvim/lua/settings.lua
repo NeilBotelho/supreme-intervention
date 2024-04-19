@@ -40,6 +40,7 @@ vim.cmd([[
 syntax on
 syntax enable
 set wrapscan
+set scrolloff=10
 set shortmess="<Enter>"
 set softtabstop=0 noexpandtab
 set nrformats+=alpha
@@ -102,6 +103,13 @@ require('onedark').setup  {
         background = true,    -- use background color for virtual text
     },
 }
+
+vim.cmd[[
+augroup auto_restore_cursor_position
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
+augroup END
+]]
 require('onedark').load()
 -- vim.cmd[[set background=dark]]
 -- vim.cmd[[colorscheme palenight]]
