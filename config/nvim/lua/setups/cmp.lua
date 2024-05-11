@@ -41,10 +41,10 @@ return {
 					['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
 					['<C-space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
 					['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-					["<Tab>"] = function(fallback)
+					["<C-k>"] = function(fallback)
 						if_cmp_visible(cmp.select_next_item, fallback)
 					end,
-					["<S-Tab>"] = function(fallback)
+					["<C-j>"] = function(fallback)
 						if_cmp_visible(cmp.select_prev_item, fallback)
 					end,
 					['<C-e>'] = cmp.mapping({

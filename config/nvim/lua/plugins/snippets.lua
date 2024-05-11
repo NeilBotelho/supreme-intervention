@@ -53,7 +53,7 @@ local css_templates = {
 	s("bgc", fmt("background-color:{};", { i(0) })),
 }
 local zig_templates={
-	s("print", fmt("std.debug.print(\"{}\".{{{}}});",{i(0),i(1)})),
+	s("print", fmt("std.debug.print(\"{}\",.{{{}}});",{i(0),i(1)})),
 	s("cImport", fmt('@cImport({{\n@cInclude("{}");\n}});',{i(1)}))
 
 }
