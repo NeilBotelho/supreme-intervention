@@ -9,14 +9,17 @@ function RequireReload(moduleName)
 	require(moduleName)
 end
 
--- RequireReload"packer_plugs"
-RequireReload "lazy_plugs"
+vim.g.cache_dir="/tmp/vim_cache/"
+require "lazy_plugs"
 RequireReload "settings"
+RequireReload "general_plugin_settings"
 RequireReload "runners"
 RequireReload "helpers"
-RequireReload "loader"
+-- RequireReload "loader"
+RequireReload "dap_settings"
+RequireReload "lsp_settings"
+RequireReload "snippets"
 RequireReload "maps"
-
 
 vim.cmd [[
  so /home/neil/.config/nvim/lib/functions.vim

@@ -1,7 +1,5 @@
--- following options are the default
--- each of these are documented in `:help nvim-tree.OPTION_NAME`
-require'nvim-tree'.setup {
-  disable_netrw       = true,
+local opts={
+	  disable_netrw       = true,
   hijack_netrw        = true,
   open_on_tab         = true,
   hijack_cursor       = false,
@@ -51,4 +49,12 @@ require'nvim-tree'.setup {
     cmd = "trash",
     require_confirm = true
   }
+
+}
+return {
+	{
+		'kyazdani42/nvim-tree.lua',
+		opts=opts,
+		keys={"<leader>T"}
+	}
 }

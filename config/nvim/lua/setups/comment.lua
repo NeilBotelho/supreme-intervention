@@ -1,5 +1,5 @@
-require("Comment").setup{
-	-- LHS of operator pending mapping in NORMAL & VISUAL mode
+local opts={
+		-- LHS of operator pending mapping in NORMAL & VISUAL mode
 	opleader = {
 		--line comment map
 		line = "gc",
@@ -19,5 +19,11 @@ require("Comment").setup{
 		-- extra mapping
     -- Includes `gco`, `gcO`, `gcA`
     extra = true,
+	}
+}
+return {
+	{
+		'numToStr/Comment.nvim',
+		opts=opts
 	}
 }
