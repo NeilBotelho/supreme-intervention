@@ -162,7 +162,7 @@ local function Obsidian()
 	noremap("n","<leader>no",":ObsidianQuickSwitch<CR>")
 	noremap("n","<leader>nn",":ObsidianNew ")
 end
-local mappers={General,InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,LazyMaps,_NvimTree, _Trouble,Obsidian}
+local mappers={InsertMode,VisualMode,Searching,TabNavigation,VimFugitive,Telescope,Mundo,Window,TerimnalToggle,PresentationMode,Completion,Hop,Buffers,Maximizer,Resizers,LazyMaps,_NvimTree, _Trouble,Obsidian, General}
 
  for _ , MapFn in pairs(mappers) do
  	MapFn()

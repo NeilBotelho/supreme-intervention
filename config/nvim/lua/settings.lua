@@ -1,6 +1,5 @@
 -- Global variable declaration
-vim.opt.termguicolors=false
-vim.g.cache_dir="/tmp/vim_cache/"
+vim.opt.termguicolors=true
 vim.opt.directory=vim.g.cache_dir.."swp"
 -- Folding
 
