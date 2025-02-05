@@ -34,7 +34,7 @@ return {
 				}):find()
 			end
 			noremap('n', '<leader>hpq', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-			noremap('n', '<leader>hpa', function() harpoon:list():append() end)
+			noremap('n', '<leader>hpa', function() harpoon:list():add() end)
 			noremap('n', '<leader>hpc', function() harpoon:list():clear() end)
 			vim.keymap.set("n", "<leader>hpt", function() toggle_telescope(harpoon:list()) end,
 				{ desc = "Open harpoon window" })

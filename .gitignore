@@ -5,3 +5,5 @@ config/bash/.Xauthority
 config/python/python_history
 config/bin/rofiKeepass
 config/bin/rst/
+config/bin/scrapers/venv
+config/bin

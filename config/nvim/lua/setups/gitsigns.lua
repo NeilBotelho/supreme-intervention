@@ -21,7 +21,6 @@ return {
 			-- noremap('n', '<leader>hR', gs.reset_buffer)
 			-- noremap('n', '<leader>hp', gs.preview_hunk)
 			noremap('n', '<leader>hb', function() gs.blame_line { full = true } end)
-			noremap('n', '<leader>tb', gs.toggle_current_line_blame)
 			noremap('n', '<leader>hd', gs.diffthis)
 			noremap('n', '<leader>hD', function() gs.diffthis('~') end)
 			noremap('n', '<leader>td', gs.toggle_deleted)

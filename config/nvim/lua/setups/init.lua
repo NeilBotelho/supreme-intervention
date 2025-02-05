@@ -3,10 +3,6 @@ return {
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-	},
 	'navarasu/onedark.nvim',
 	'mhartington/oceanic-next',
 	--Functional
@@ -35,15 +31,14 @@ return {
 	},
 	{
 		'mfussenegger/nvim-dap',
-		lazy=false,
+		lazy = false,
 	},
-	{
-	'rcarriga/nvim-dap-ui',
-	lazy=false
-},
-	'theHamsta/nvim-dap-virtual-text',
-	'nvim-telescope/telescope-dap.nvim',
-	'mfussenegger/nvim-dap-python',
-	'nvim-neotest/nvim-nio',
-
+	-- {
+	-- 	'rcarriga/nvim-dap-ui',
+	-- 	lazy = false
+	-- },
+	-- 'theHamsta/nvim-dap-virtual-text',
+	-- 'nvim-telescope/telescope-dap.nvim',
+	-- 'mfussenegger/nvim-dap-python',
+	-- 'nvim-neotest/nvim-nio',
 }

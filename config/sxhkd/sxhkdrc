@@ -78,3 +78,7 @@ control+alt + {Left,Right,Up}
 	xrandr --output eDP --rotate {left,right,normal}
 
 #############################################################################
+# Bluetooth
+super + b
+	bluetooth
+

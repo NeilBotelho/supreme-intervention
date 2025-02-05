@@ -1,6 +1,8 @@
 #!/bin/sh
 
 #Navigation aliases
+alias book="cd ~/Desktop/Learn/"
+alias refa="cd ~/.local/lib/python3.13t/site-packages/asyncio"
 alias pres="cd ~/Desktop/presentation/"
 alias ircish="cd ~/.local/share/projects/old/IRCish"
 alias skl="cd ~/Desktop/suckless/"
@@ -12,7 +14,7 @@ alias pr="cd ~/.local/share/projects"
 alias arc="cd ~/Desktop/archive"
 alias bk="cd ~/Desktop/backups/"
 alias dt="cd ~/Desktop/backups/dotfiles"
-alias ent="cd ~/Downloads/mediaserver/"
+alias ent="cd ~/entertainment/"
 alias msk="cd ~/.local/share/myMusic/"
 alias todo="vim ~/.local/store/todo/todo"
 alias wrk="cd ~/projects/work"
@@ -54,6 +56,8 @@ alias tl="tmux list-sessions"
 alias muxt="vim /home/neil/.config/tmux/tmux.conf"
 
 #Application Aliases
+alias vim="nvim"
+alias seggit="cat ~/.local/share/sec/seggit|clip"
 alias gwu="git config remote.origin.fetch \"+refs/heads/*:refs/remotes/origin/*\""
 alias phone="cat ~/.local/share/projects/resumes/num |clip"
 alias p="python3"
