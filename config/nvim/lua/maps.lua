@@ -153,14 +153,20 @@ end
 -- 	noremap("n", "<leader>dq", ":TroubleToggle quickfix<CR>")
 -- 	noremap("n", "<leader>td", ":TodoTrouble<CR>")
 -- end
-
+local function Dev()
+	noremap("n", "<leader>ht", ":Telescope help_tags<CR>")
+	noremap("n", "<leader><leader>x", "<cmd>source %<CR>:echo 'sourced file'<CR>")
+	noremap("n", "<leader>x", ":.lua<CR>")
+	noremap("n", "<leader>xf", ":%lua<CR>") -- execute file
+	noremap("v", "<leader>x", ":lua<CR>")
+end
 local function Obsidian()
 	noremap("n", "<leader>oo", ":e ~/.local/share/obsidian/vaults/personal/notes/home.md<CR>")
 	noremap("n", "<leader>no", ":ObsidianQuickSwitch<CR>")
 	noremap("n", "<leader>nn", ":ObsidianNew ")
 end
 local mappers = { InsertMode, VisualMode, Searching, TabNavigation, VimFugitive, Telescope, Mundo, Window, TerimnalToggle,
-	PresentationMode, Completion, Hop, Buffers, Maximizer, Resizers, LazyMaps, _NvimTree, _Trouble, Obsidian, General }
+	PresentationMode, Completion, Hop, Buffers, Maximizer, Resizers, LazyMaps, _NvimTree, _Trouble, Obsidian, General, Dev}
 
 for _, MapFn in pairs(mappers) do
 	MapFn()

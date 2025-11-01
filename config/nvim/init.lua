@@ -9,6 +9,12 @@ function RequireReload(moduleName)
 	require(moduleName)
 end
 
+-- Lua modules
+package.path = package.path .. ";/home/neil/.luarocks/share/lua/5.1/?.lua"
+package.path = package.path .. ";/home/neil/.luarocks/share/lua/5.1/?/init.lua"
+
+-- C modules
+package.cpath = package.cpath .. ";/home/neil/.luarocks/lib/lua/5.1/?.so"
 vim.g.cache_dir="/tmp/vim_cache/"
 require "lazy_plugs"
 RequireReload "settings"
@@ -20,7 +26,7 @@ RequireReload "dap_settings"
 RequireReload "lsp_settings"
 RequireReload "snippets"
 RequireReload "maps"
-
+RequireReload("aiplugin")
 vim.cmd [[
  so /home/neil/.config/nvim/lib/functions.vim
  so /home/neil/.config/nvim/lib/abbreviations.vim

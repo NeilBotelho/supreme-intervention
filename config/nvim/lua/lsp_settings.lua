@@ -74,8 +74,8 @@ end
 
 --}}}
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump({count=1}) end)
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump({count=-1}) end)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 vim.api.nvim_create_autocmd('LspAttach', {
 	group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -111,7 +111,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- General Server Setup {{{
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "tsserver", "gopls", "bashls", "yamlls", "texlab", "neocmake", "html", "clangd", "emmet_ls", "cssls",
+local servers = { "ts_ls", "gopls", "bashls", "yamlls", "texlab", "neocmake", "html", "clangd", "emmet_ls", "cssls",
 	"rnix", "zls" }
 
 for _, lsp in ipairs(servers) do
@@ -172,29 +172,44 @@ nvim_lsp["emmet_ls"].setup {
 }
 -- }}}
 -- lua-ls Setup {{{
-require 'lspconfig'.lua_ls.setup {
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = 'LuaJIT',
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { 'vim' },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = vim.api.nvim_get_runtime_file("", true),
-				checkThirdParty = false
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-}
+require('lspconfig').lua_ls.setup({
+  on_init = function(client)
+    if client.workspace_folders then
+      local path = client.workspace_folders[1].name
+      if
+        path ~= vim.fn.stdpath('config') and
+        (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+      then
+        return
+      end
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua or {}, {
+      runtime = {
+        version = 'LuaJIT',
+        path = {
+          'lua/?.lua',
+          'lua/?/init.lua',
+        },
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+          '${3rd}/luv/library',
+          '${3rd}/busted/library',
+        },
+      },
+    })
+
+    -- This is required to apply the updated settings.
+    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+  end,
+
+  settings = {
+    Lua = {} -- base table, merged in on_init
+  },
+})
 --}}}
 -- Ale {{{
 vim.cmd([[

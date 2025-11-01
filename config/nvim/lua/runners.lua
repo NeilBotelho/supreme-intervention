@@ -106,7 +106,7 @@
 -- 	-- 	html = {{	"<leader>r", ":w<CR>:!prettier -w % <CR>:e! %<CR><Esc>"}}
 -- 	-- }
 -- Code Runner - execute commands in a floating terminal
-local fterm=require'FTerm'
+local fterm=require'fterminal'
 local runners = {
 	python = 'python',
 	go = 'c',
@@ -121,16 +121,16 @@ local runners = {
 
 vim.keymap.set('n', '<leader>r', function()
 		vim.cmd('write')
-    local buf = vim.api.nvim_buf_get_name(0)
-    local ftype = vim.filetype.match({ filename = buf })
+    local filename = vim.api.nvim_buf_get_name(0)
+    local ftype = vim.filetype.match({ filename = filename })
     local exec = runners[ftype]
 	if ftype=='zig' then
-		buf=''
+		filename=''
 	end
     if exec ~= nil then
-        fterm.run(exec..' '..buf)
+        fterm.run(exec..' '..filename)
 		else
-        fterm.run('c '..buf)
+        fterm.run('c '..filename)
 
     end
 end)
